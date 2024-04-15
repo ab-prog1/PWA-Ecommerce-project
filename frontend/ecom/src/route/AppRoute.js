@@ -1,15 +1,17 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { Component, Fragment } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 
-function AppRoute() {
-    return (
-        <Router>
-            <Routes>
-                <Route exact path="/" element={<HomePage />} />
-            </Routes>
-        </Router>
-    );
+class AppRoute extends Component {
+     render() {
+          return (
+               <Fragment>
+                    <Routes>
+                         <Route exact path="/" element={<HomePage />} />
+                    </Routes>
+               </Fragment>
+          );
+     }
 }
 
 export default AppRoute;

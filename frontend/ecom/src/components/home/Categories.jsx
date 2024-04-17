@@ -15,39 +15,39 @@ class Categories extends Component {
                
                <Col key={1} xl={6} lg={6} md={2} sm={12} xs={12}>
                     <Row>
-           <Col className="p-0" key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
+           <Col className="p-0" key={2} xl={3} lg={3} md={3} sm={6} xs={6}>
           <Card className="h-100 w-100 text-center">          
           <Card.Body> 
-          <img className="center" src="https://rukminim1.flixcart.com/flap/128/128/image/f15c02bfeb02d15d.png?q=100" />  
+          <img className="center" src="https://rukminim1.flixcart.com/flap/128/128/image/f15c02bfeb02d15d.png?q=100" alt="Top Offers"/>  
           <h5 className="category-name">Top Offers</h5>  
           </Card.Body>
           </Card> 
           </Col>
 
-          <Col className="p-0" key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
+          <Col className="p-0" key={3} xl={3} lg={3} md={3} sm={6} xs={6}>
           <Card className="h-100 w-100 text-center">          
           <Card.Body> 
-          <img className="center" src="https://rukminim1.flixcart.com/flap/128/128/image/29327f40e9c4d26b.png?q=100" />  
+          <img className="center" alt="Top Offers" src="https://rukminim1.flixcart.com/flap/128/128/image/29327f40e9c4d26b.png?q=100" />  
           <h5 className="category-name">Grocery</h5>  
           </Card.Body>
           </Card> 
           </Col>
 
 
-          <Col className="p-0" key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
+          <Col className="p-0" key={4} xl={3} lg={3} md={3} sm={6} xs={6}>
           <Card className="h-100 w-100 text-center">          
           <Card.Body> 
-          <img className="center" src="https://rukminim1.flixcart.com/flap/128/128/image/22fddf3c7da4c4f4.png?q=100" />  
+          <img className="center" alt="Top Offers" src="https://rukminim1.flixcart.com/flap/128/128/image/22fddf3c7da4c4f4.png?q=100" />  
           <h5 className="category-name">Mobiles</h5>  
           </Card.Body>
           </Card> 
           </Col>
 
 
-          <Col className="p-0" key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
+          <Col className="p-0" key={5} xl={3} lg={3} md={3} sm={6} xs={6}>
           <Card className="h-100 w-100 text-center">          
           <Card.Body> 
-          <img className="center" src="https://rukminim1.flixcart.com/flap/128/128/image/82b3ca5fb2301045.png?q=100" />  
+          <img className="center" alt="Top Offers" src="https://rukminim1.flixcart.com/flap/128/128/image/82b3ca5fb2301045.png?q=100" />  
           <h5 className="category-name">Fashion</h5>  
           </Card.Body>
           </Card> 
@@ -58,41 +58,41 @@ class Categories extends Component {
 
 
 
-               <Col key={1} xl={6} lg={6} md={2} sm={12} xs={12}>
+               <Col key={6} xl={6} lg={6} md={2} sm={12} xs={12}>
                     <Row>
-           <Col className="p-0" key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
+           <Col className="p-0" key={7} xl={3} lg={3} md={3} sm={6} xs={6}>
           <Card className="h-100 w-100 text-center">          
           <Card.Body> 
-          <img className="center" src="https://rukminim1.flixcart.com/flap/128/128/image/69c6589653afdb9a.png?q=100" />  
+          <img className="center" alt="Top Offers" src="https://rukminim1.flixcart.com/flap/128/128/image/69c6589653afdb9a.png?q=100" />  
           <h5 className="category-name">Electronics</h5>  
           </Card.Body>
           </Card> 
           </Col>
 
-          <Col className="p-0" key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
+          <Col className="p-0" key={8} xl={3} lg={3} md={3} sm={6} xs={6}>
           <Card className="h-100 w-100 text-center">          
           <Card.Body> 
-          <img className="center" src="https://rukminim1.flixcart.com/flap/128/128/image/ab7e2b022a4587dd.jpg?q=100" />  
+          <img className="center" alt="Top Offers" src="https://rukminim1.flixcart.com/flap/128/128/image/ab7e2b022a4587dd.jpg?q=100" />  
           <h5 className="category-name">Home</h5>  
           </Card.Body>
           </Card> 
           </Col>
 
 
-          <Col className="p-0" key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
+          <Col className="p-0" key={9} xl={3} lg={3} md={3} sm={6} xs={6}>
           <Card className="h-100 w-100 text-center">          
           <Card.Body> 
-          <img className="center" src="https://rukminim1.flixcart.com/flap/128/128/image/0ff199d1bd27eb98.png?q=100" />  
+          <img className="center" alt="Top Offers" src="https://rukminim1.flixcart.com/flap/128/128/image/0ff199d1bd27eb98.png?q=100" />  
           <h5 className="category-name">Appliances</h5>  
           </Card.Body>
           </Card> 
           </Col>
 
 
-          <Col className="p-0" key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
+          <Col className="p-0" key={10} xl={3} lg={3} md={3} sm={6} xs={6}>
           <Card className="h-100 w-100 text-center">          
           <Card.Body> 
-          <img className="center" src="https://rukminim1.flixcart.com/flap/128/128/image/dff3f7adcf3a90c6.png?q=100" />  
+          <img className="center" alt="Top Offers" src="https://rukminim1.flixcart.com/flap/128/128/image/dff3f7adcf3a90c6.png?q=100" />  
           <h5 className="category-name">Beauty</h5>  
           </Card.Body>
           </Card> 
@@ -108,41 +108,41 @@ class Categories extends Component {
           <Row>
                
                
-               <Col key={1} xl={6} lg={6} md={2} sm={12} xs={12}>
+               <Col key={31} xl={6} lg={6} md={2} sm={12} xs={12}>
                     <Row>
-           <Col className="p-0" key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
+           <Col className="p-0" key={11} xl={3} lg={3} md={3} sm={6} xs={6}>
           <Card className="h-100 w-100 text-center">          
           <Card.Body> 
-          <img className="center" src="https://rukminim1.flixcart.com/flap/128/128/image/f15c02bfeb02d15d.png?q=100" />  
+          <img className="center" alt="Top Offers" src="https://rukminim1.flixcart.com/flap/128/128/image/f15c02bfeb02d15d.png?q=100" />  
           <h5 className="category-name">Top Offers</h5>  
           </Card.Body>
           </Card> 
           </Col>
 
-          <Col className="p-0" key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
+          <Col className="p-0" key={12} xl={3} lg={3} md={3} sm={6} xs={6}>
           <Card className="h-100 w-100 text-center">          
           <Card.Body> 
-          <img className="center" src="https://rukminim1.flixcart.com/flap/128/128/image/29327f40e9c4d26b.png?q=100" />  
+          <img className="center" alt="Top Offers" src="https://rukminim1.flixcart.com/flap/128/128/image/29327f40e9c4d26b.png?q=100" />  
           <h5 className="category-name">Grocery</h5>  
           </Card.Body>
           </Card> 
           </Col>
 
 
-          <Col className="p-0" key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
+          <Col className="p-0" key={13} xl={3} lg={3} md={3} sm={6} xs={6}>
           <Card className="h-100 w-100 text-center">          
           <Card.Body> 
-          <img className="center" src="https://rukminim1.flixcart.com/flap/128/128/image/22fddf3c7da4c4f4.png?q=100" />  
+          <img className="center" alt="Top Offers" src="https://rukminim1.flixcart.com/flap/128/128/image/22fddf3c7da4c4f4.png?q=100" />  
           <h5 className="category-name">Mobiles</h5>  
           </Card.Body>
           </Card> 
           </Col>
 
 
-          <Col className="p-0" key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
+          <Col className="p-0" key={14} xl={3} lg={3} md={3} sm={6} xs={6}>
           <Card className="h-100 w-100 text-center">          
           <Card.Body> 
-          <img className="center" src="https://rukminim1.flixcart.com/flap/128/128/image/82b3ca5fb2301045.png?q=100" />  
+          <img className="center" alt="Top Offers" src="https://rukminim1.flixcart.com/flap/128/128/image/82b3ca5fb2301045.png?q=100" />  
           <h5 className="category-name">Fashion</h5>  
           </Card.Body>
           </Card> 
@@ -155,39 +155,39 @@ class Categories extends Component {
 
                <Col key={1} xl={6} lg={6} md={2} sm={12} xs={12}>
                     <Row>
-           <Col className="p-0" key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
+           <Col className="p-0" key={15} xl={3} lg={3} md={3} sm={6} xs={6}>
           <Card className="h-100 w-100 text-center">          
           <Card.Body> 
-          <img className="center" src="https://rukminim1.flixcart.com/flap/128/128/image/69c6589653afdb9a.png?q=100" />  
+          <img className="center" alt="Top Offers" src="https://rukminim1.flixcart.com/flap/128/128/image/69c6589653afdb9a.png?q=100" />  
           <h5 className="category-name">Electronics</h5>  
           </Card.Body>
           </Card> 
           </Col>
 
-          <Col className="p-0" key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
+          <Col className="p-0" key={16} xl={3} lg={3} md={3} sm={6} xs={6}>
           <Card className="h-100 w-100 text-center">          
           <Card.Body> 
-          <img className="center" src="https://rukminim1.flixcart.com/flap/128/128/image/ab7e2b022a4587dd.jpg?q=100" />  
+          <img className="center" alt="Top Offers" src="https://rukminim1.flixcart.com/flap/128/128/image/ab7e2b022a4587dd.jpg?q=100" />  
           <h5 className="category-name">Home</h5>  
           </Card.Body>
           </Card> 
           </Col>
 
 
-          <Col className="p-0" key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
+          <Col className="p-0" key={17} xl={3} lg={3} md={3} sm={6} xs={6}>
           <Card className="h-100 w-100 text-center">          
           <Card.Body> 
-          <img className="center" src="https://rukminim1.flixcart.com/flap/128/128/image/0ff199d1bd27eb98.png?q=100" />  
+          <img className="center" alt="Top Offers" src="https://rukminim1.flixcart.com/flap/128/128/image/0ff199d1bd27eb98.png?q=100" />  
           <h5 className="category-name">Appliances</h5>  
           </Card.Body>
           </Card> 
           </Col>
 
 
-          <Col className="p-0" key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
+          <Col className="p-0" key={18} xl={3} lg={3} md={3} sm={6} xs={6}>
           <Card className="h-100 w-100 text-center">          
           <Card.Body> 
-          <img className="center" src="https://rukminim1.flixcart.com/flap/128/128/image/dff3f7adcf3a90c6.png?q=100" />  
+          <img className="center" alt="Top Offers" src="https://rukminim1.flixcart.com/flap/128/128/image/dff3f7adcf3a90c6.png?q=100" />  
           <h5 className="category-name">Beauty</h5>  
           </Card.Body>
           </Card> 

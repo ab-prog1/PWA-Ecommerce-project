@@ -35,8 +35,7 @@ class AppRoute extends Component {
                          <Route exact path="/favourite" element={<FavouritePage/>} /> 
                          <Route exact path="/cart" element={<CartPage/>} /> 
                        
-
-                      
+                     
                     </Routes>
                </Fragment>
           );

@@ -10,6 +10,7 @@ import ProductDetailsPage from '../pages/ProductDetailsPage';
 import NotificationPage from '../pages/NotificationPage';
 import FavouritePage from '../pages/FavouritePage';
 import CartPage from '../pages/CartPage';
+import AboutPage from '../pages/AboutPage';
 
 
 
@@ -26,6 +27,8 @@ class AppRoute extends Component {
                          <Route exact path="/PurchasePage" element={<PurchasePage />} />
                          <Route exact path="/PrivacyPage" element={<PrivacyPage />} /> 
                          <Route exact path="/RefundPage" element={<RefundPage/>} /> 
+                         <Route exact path="/about" element={<AboutPage/>} />
+
 
                          <Route exact path="/productdetails" element={<ProductDetailsPage/>} /> 
                          <Route exact path="/notification" element={<NotificationPage/>} /> 

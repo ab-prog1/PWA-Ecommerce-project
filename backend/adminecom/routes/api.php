@@ -6,6 +6,9 @@ use App\Http\Controllers\Admin\VisitorController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\SiteInfoController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductListController;
+
+
 
 // get visitor
 Route::get('/getvisitor', [VisitorController::class, 'GetVisitorDetails']);
@@ -15,6 +18,8 @@ Route::post('/postcontact', [ContactController::class, 'PostContactDetails']);
 Route::get('/allsiteinfo', [SiteInfoController::class, 'AllSiteinfo']);
 // All Category  route
 Route::get('/allcategory', [CategoryController::class, 'AllCategory']);
+// ProductList  route
+Route::get('/productlistbyremark/{remark}', [ProductListController::class, 'ProductListByRemark']);
 
 
 

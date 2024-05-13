@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import { Link } from 'react-router-dom';
 
 class MegaMenu extends Component {
 
@@ -24,23 +25,29 @@ class MegaMenu extends Component {
      render() {
 
           const CatList = this.props.data;
-          const MyView = CatList.map((CatList, i) => {
-               return (
-                 <div key={CatList.category_name}>
-                   <button onClick={this.MenuItemClick} className="accordion">
-                     <img className="accordionMenuIcon" src={CatList.category_image} />&nbsp; {CatList.category_name}
-                   </button>
-                   <div className="panel">
-                     <ul>
-                       {CatList.subcategory_name.map((SubList, i) => {
-                         return <li key={SubList.subcategory_name}><a href="#" className="accordionItem">{SubList.subcategory_name}</a></li>
-                       })}
-                     </ul>
-                   </div>
-                 </div>
-               );
-             });
-  
+
+          const MyView = CatList.map((CatList,i)=>{
+               return <div key={i.toString()}>
+      <button onClick={this.MenuItemClick} className="accordion">
+      <img className="accordionMenuIcon" src={CatList.category_image} />&nbsp; {CatList.category_name}
+                        </button>
+          <div className="panel">
+      <ul>
+          {
+               (CatList.subcategory_name).map((SubList,i)=>{
+                    return <li><Link to={"productsubcategory/"+CatList.category_name+"/"+SubList.subcategory_name } className="accordionItem" >{SubList.subcategory_name} </Link></li>
+
+               })    
+          }
+          
+      </ul>
+         </div> 
+             
+               </div>
+
+
+
+          });
 
 
 

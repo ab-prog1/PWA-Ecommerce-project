@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\SiteInfoController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductListController;
-
+use App\Http\Controllers\Admin\SliderController;
 
 
 // get visitor
@@ -25,3 +25,5 @@ Route::get('/productlistbycategory/{category}', [ProductListController::class, '
 
 Route::get('/productlistbysubcategory/{category}/{subcategory}', [ProductListController::class, 'ProductListBySubCategory']);
 
+// Slider  route
+Route::get('/allslider', [SliderController::class, 'AllSlider']);

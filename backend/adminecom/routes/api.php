@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\SiteInfoController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductListController;
 use App\Http\Controllers\Admin\SliderController;
-
+use App\Http\Controllers\Admin\ProductDetailsController;
 
 // get visitor
 Route::get('/getvisitor', [VisitorController::class, 'GetVisitorDetails']);
@@ -27,3 +27,5 @@ Route::get('/productlistbysubcategory/{category}/{subcategory}', [ProductListCon
 
 // Slider  route
 Route::get('/allslider', [SliderController::class, 'AllSlider']);
+// Prodouct Details  route
+Route::get('/productdetails/{id}', [ProductDetailsController::class, 'ProductDetails']);

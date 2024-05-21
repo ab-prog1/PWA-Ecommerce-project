@@ -10,22 +10,22 @@ class SliderLoading extends Component {
  
                <div className="row">
                     <div className="col-3">
-                    <div class="ph-row">
-                    <div class="ph-col-12"></div>
-                    <div class="ph-col-12"></div>
-                    <div class="ph-col-12"></div>
-                    <div class="ph-col-12"></div>
-                    <div class="ph-col-12"></div>
-                     <div class="ph-col-12"></div>
-                     <div class="ph-col-12"></div>
-                     <div class="ph-col-12"></div>
+                    <div className="ph-row">
+                    <div className="ph-col-12"></div>
+                    <div className="ph-col-12"></div>
+                    <div className="ph-col-12"></div>
+                    <div className="ph-col-12"></div>
+                    <div className="ph-col-12"></div>
+                     <div className="ph-col-12"></div>
+                     <div className="ph-col-12"></div>
+                     <div className="ph-col-12"></div>
                    
                     </div>
 
                     </div>
 
                     <div className="col-9">
-                    <div class="ph-picture"></div>
+                    <div className="ph-picture"></div>
                     </div>
 
                </div>

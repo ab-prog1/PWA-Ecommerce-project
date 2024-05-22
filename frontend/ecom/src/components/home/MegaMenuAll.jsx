@@ -33,31 +33,23 @@ class MegaMenuAll extends Component {
   render() {
     const CatList = this.state.MenuData;
 
-    const MyView = CatList.map((CatList, i) => {
+    const MyView = CatList.map((category, i) => {
       return (
         <div key={i.toString()}>
           <button onClick={this.MenuItemClick} className="accordionAll">
-            <img
-              className="accordionMenuIconAll"
-              src={CatList.category_image}
-            />
-            &nbsp; {CatList.category_name}
+            <img className="accordionMenuIconAll" src={category.category_image} alt={category.category_name} />
+            &nbsp; {category.category_name}
           </button>
           <div className="panelAll">
             <ul>
-              {CatList.subcategory_name.map((SubList, i) => {
+              {category.subcategory_name.map((subCategory, j) => {
                 return (
-                  <li>
+                  <li key={j.toString()}>
                     <Link
-                      to={
-                        "productsubcategory/" +
-                        CatList.category_name +
-                        "/" +
-                        SubList.subcategory_name
-                      }
+                      to={"productsubcategory/" + category.category_name + "/" + subCategory.subcategory_name}
                       className="accordionItem"
                     >
-                      {SubList.subcategory_name}{" "}
+                      {subCategory.subcategory_name}
                     </Link>
                   </li>
                 );

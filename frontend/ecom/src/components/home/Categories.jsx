@@ -41,7 +41,7 @@ class Categories extends Component {
           sm={6}
           xs={6}
         >
-          <Link to={"/productcategory/" + CatList.category_name}>
+               <Link className="text-link" to={"/productcategory/"+CatList.category_name}>    
             <Card className="h-100 w-100 text-center">
               <Card.Body>
                 <img className="center" src={CatList.category_image} />

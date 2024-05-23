@@ -50,6 +50,34 @@ const ProductDetails = ({ data }) => {
     long_description
   } = productDetails[0];
 
+  var ColorDiv = "d-none"
+  if(color!="na"){
+       let ColorArray = color.split(',');
+       var ColorOption = ColorArray.map((ColorList,i)=>{
+            return <option value={ColorList}> {ColorList} </option>
+       })
+       ColorDiv=""
+  }
+  else{
+       ColorDiv="d-none"
+  }
+
+
+  var SizeDiv = "d-none"
+  if(size!="na"){
+       let SizeArray = size.split(',');
+       var SizeOption = SizeArray.map((SizeList,i)=>{
+            return <option value={SizeList}> {SizeList} </option>
+       })
+       SizeDiv=""
+  }
+  else{
+       SizeDiv="d-none"
+  }
+
+
+
+
   return (
     <Fragment>
       <Container fluid className="BetweenTwoSection">
@@ -80,6 +108,40 @@ const ProductDetails = ({ data }) => {
                 <h6 className="mt-2">SubCategory : <b>{subcategory}</b></h6>
                 <h6 className="mt-2">Brand : <b>{brand}</b></h6>
                 <h6 className="mt-2">Product Code : <b>{product_code}</b></h6>
+                <div className={ColorDiv}>
+               <h6 className="mt-2"> Choose Color  </h6>
+               <select className="form-control form-select">
+               <option>Choose Color</option>
+               {ColorOption}
+               </select> 
+               </div>
+
+
+               <div className={SizeDiv}>
+               <h6 className="mt-2"> Choose Size  </h6>
+               <select className="form-control form-select">
+               <option>Choose Size</option>
+               {SizeOption}
+               </select> 
+               </div>
+
+               <div className="" >
+               <h6 className="mt-2"> Choose Quantity  </h6>
+               <select className="form-control form-select">
+               <option>Choose Quantity</option>
+               <option value="01">01</option>
+               <option value="02">02</option>
+               <option value="03">03</option>
+               <option value="04">04</option>
+               <option value="05">05</option>
+               <option value="06">06</option>
+               <option value="07">07</option>
+               <option value="08">08</option>
+               <option value="09">09</option>
+               <option value="10">10</option> 
+
+               </select> 
+               </div>
                 <div className="input-group mt-3">
                   <button className="btn site-btn m-1"> <i className="fa fa-shopping-cart"></i> Add To Cart</button>
                   <button className="btn btn-primary m-1"> <i className="fa fa-car"></i> Order Now</button>

@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductListController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\ProductDetailsController;
+use App\Http\Controllers\Admin\NotificationController;
 
 // get visitor
 Route::get('/getvisitor', [VisitorController::class, 'GetVisitorDetails']);
@@ -29,3 +30,6 @@ Route::get('/productlistbysubcategory/{category}/{subcategory}', [ProductListCon
 Route::get('/allslider', [SliderController::class, 'AllSlider']);
 // Prodouct Details  route
 Route::get('/productdetails/{id}', [ProductDetailsController::class, 'ProductDetails']);
+
+// Notification  route
+Route::get('/notification', [NotificationController::class, 'NotificationHistory']);

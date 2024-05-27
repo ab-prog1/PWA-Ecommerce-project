@@ -1,5 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import Breadcrumb from 'react-bootstrap/Breadcrumb'
+import { Link } from 'react-router-dom'
+
 
 const ProductDetails = ({ data }) => {
   const [productAllData, setProductAllData] = useState({});
@@ -92,6 +95,18 @@ const ProductDetails = ({ data }) => {
   return (
     <Fragment>
       <Container fluid className="BetweenTwoSection">
+      <div className="breadbody">
+               <Breadcrumb>
+  <Breadcrumb.Item> <Link to="/"> Home </Link> </Breadcrumb.Item>
+
+  <Breadcrumb.Item> <Link to={"/productcategory/"+category}> {category } </Link> </Breadcrumb.Item> 
+
+  <Breadcrumb.Item> <Link to={"/productsubcategory/"+category+"/"+subcategory}> {subcategory } </Link> </Breadcrumb.Item>
+
+    <Breadcrumb.Item> <Link to={"/productdetails/"+product_id}> {title } </Link> </Breadcrumb.Item>   
+
+</Breadcrumb>
+</div>
         <Row className="p-2">
           <Col className="shadow-sm bg-white pb-3 mt-4" md={12} lg={12} sm={12} xs={12}>
             <Row>

@@ -33,3 +33,6 @@ Route::get('/productdetails/{id}', [ProductDetailsController::class, 'ProductDet
 
 // Notification  route
 Route::get('/notification', [NotificationController::class, 'NotificationHistory']);
+
+// Search  route
+Route::get('/search/{key}', [ProductListController::class, 'ProductBySearch']);

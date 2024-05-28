@@ -15,6 +15,8 @@ import ProductCategoryPage from '../pages/ProductCategoryPage';
 import ProductSubCategoryPage from '../pages/ProductSubCategoryPage';
 import SearchPage from '../pages/SearchPage';
 import RegisterPage from '../pages/RegisterPage';
+import ResetPasswordPage from '../pages/ResetPasswordPage';
+import ForgetPasswordPage from '../pages/ForgetPasswordPage';
 
 
 class AppRoute extends Component {
@@ -37,6 +39,9 @@ class AppRoute extends Component {
                          <Route exact path="/productsubcategory/:category/:subcategory" element={<ProductSubCategoryPage/>} /> 
                          <Route exact path="/productbysearch/:searchkey" element={<SearchPage/>} />
                          <Route exact path="/register" element={<RegisterPage/>} />
+                         <Route exact path="/forget" element={<ForgetPasswordPage/>} />
+                         <Route exact path="/reset/:id" element={<ResetPasswordPage/>} />
+                         
                     </Routes>
                </Fragment>
           );

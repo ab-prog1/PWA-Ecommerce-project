@@ -2,9 +2,8 @@ import React, { Component, Fragment } from 'react'
 import {Navbar,Container, Row, Col,Button} from 'react-bootstrap';
 import Logo from '../../assets/images/easyshop.png';
 import Bars from '../../assets/images/bars.png';
-import {Link} from "react-router-dom";
 import MegaMenuAll from '../home/MegaMenuAll';
- 
+import {Link, Navigate } from "react-router-dom";
    
  class NavMenuDesktop extends Component {
 
@@ -16,10 +15,14 @@ import MegaMenuAll from '../home/MegaMenuAll';
                Searchkey:"",
                SearchRedirectStauts:false
           }
+          this.SearchOnChange = this.SearchOnChange.bind(this);
+          this.SeachOnClick = this.SeachOnClick.bind(this);
+          this.searchRedirect = this.searchRedirect.bind(this);
      }
+
      SearchOnChange(event){
           let Searchkey = event.target.value;
-          alert(Searchkey);
+          // alert(Searchkey);
           this.setState({Searchkey:Searchkey});
      }
 
@@ -28,7 +31,11 @@ import MegaMenuAll from '../home/MegaMenuAll';
                this.setState({SearchRedirectStauts:true})
           }
      }
-
+     searchRedirect(){
+          if(this.state.SearchRedirectStauts===true){
+               return <Navigate  to={"/productbysearch/"+this.state.Searchkey} />
+          }
+     }
 
 
      MenuBarClickHandler=()=>{
@@ -92,7 +99,7 @@ import MegaMenuAll from '../home/MegaMenuAll';
               </Col>
 
          </Row>
-   
+         {this.searchRedirect()}
     </Container>
 
   </Navbar>

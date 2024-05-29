@@ -46,7 +46,7 @@ class MegaMenuAll extends Component {
                 return (
                   <li key={j.toString()}>
                     <Link
-                      to={"productsubcategory/" + category.category_name + "/" + subCategory.subcategory_name}
+                      to={"/productsubcategory/" + category.category_name + "/" + subCategory.subcategory_name}
                       className="accordionItem"
                     >
                       {subCategory.subcategory_name}

@@ -10,6 +10,35 @@ use App\Http\Controllers\Admin\ProductListController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\ProductDetailsController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\User\AuthController;
+
+
+
+ /////////////// User Login API Start ////////////////////////
+
+ // Login Routes
+ Route::post('/login',[AuthController::class, 'Login']);
+
+ // Register Routes
+Route::post('/register',[AuthController::class, 'Register']);
+
+ // Logout Routes
+ Route::post('/logout',[AuthController::class, 'Logout']);
+
+ /////////////// End User Login API Start ////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // get visitor
 Route::get('/getvisitor', [VisitorController::class, 'GetVisitorDetails']);

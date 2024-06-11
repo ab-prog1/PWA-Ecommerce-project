@@ -1,18 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\User;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-
-// use Auth;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Hash;
 // use App\Http\Requests\RegisterRequest;
 // use DB;
-use Illuminate\Support\Facades\Hash;
-
 
 class AuthController extends Controller
 {
@@ -65,7 +59,7 @@ class AuthController extends Controller
     {
 
         $request->validate([
-            'email' => "required|email|unique:users",
+            'email' => "required|email|string",
             'password' => "required"
         ]);
         $user = User::where("email", $request->email)->first();

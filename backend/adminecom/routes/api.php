@@ -29,7 +29,12 @@ Route::post('/register',[AuthController::class, 'Register']);
 
 
 
-
+Route::group ([
+    "middleware" => ["auth:api"]
+], function(){
+    Route::get("profile",[AuthController::class, "profile"]);
+    Route::get("logout",[AuthController::class, "logout"]);
+});
 
 
 

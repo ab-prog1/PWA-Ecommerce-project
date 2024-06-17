@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\ProductDetailsController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\ForgetController;
-
+use App\Http\Controllers\User\ResetController;
 
  /////////////// User Login API Start ////////////////////////
 
@@ -28,6 +28,8 @@ Route::post('/register',[AuthController::class, 'Register']);
   // forgetpassword Routes
   Route::post('/forgetpassword',[ForgetController::class, 'ForgetPassword']);
 
+  // Resset password Routes
+  Route::post('/resetpassword',[ResetController::class, 'ResetPassword']);
  /////////////// End User Login API Start ////////////////////////
 
 

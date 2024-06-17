@@ -1,25 +1,33 @@
 <?php
 
 namespace App\Http\Controllers\User;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-// use App\Http\Requests\RegisterRequest;
+use Illuminate\Support\Facades\Validator;
 // use DB;
 
 class AuthController extends Controller
 {
 
-
-    public function Register(Request $request)
+    public function register(Request $request)
     {
-
-        $request->validate([
-            'name' => "required|string",
-            'email' => "required|email|unique:users",
-            'password' => "required||confirmed"
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:55',
+            'email' => 'required|email|min:5|max:60|unique:users',
+            'password' => 'required|confirmed'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Registration failed',
+                'errors' => $validator->errors()
+            ], 400);
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -27,109 +35,134 @@ class AuthController extends Controller
         ]);
 
         return response()->json([
-            "status" => true,
-            'message' => "Registration Successfull",
-            "data" => []
-        ]);
+            'status' => true,
+            'message' => 'Registration successful',
+            'data' => []
+        ], 200);
     }
-    //  try{
 
+    // public function Register(Request $request)
+    // {
+
+    //     $request->validate([
+    //         'name' => "required|string",
+    //         'email' => "required|email|unique:users",
+    //         'password' => "required||confirmed"
+    //     ]);
     //     $user = User::create([
     //         'name' => $request->name,
     //         'email' => $request->email,
-    //         'password' => Hash::make($request->password)
+    //         'password' => bcrypt($request->password)
     //     ]);
-    //     $token = $user->createToken('app')->accessToken;
 
-    //     return response([
+    //     return response()->json([
+    //         "status" => true,
     //         'message' => "Registration Successfull",
-    //         'token' => $token,
-    //         'user' => $user
-    //     ],200);
+    //         "data" => []
+    //     ]);
+    // }
 
-    //     }catch(Exception $exception){
-    //         return response([
-    //             'message' => $exception->getMessage()
-    //         ],400);
-    //     }
-
-    // } // end mehtod
-
-    public function Login(Request $request)
+    public function login(Request $request)
     {
-
-        $request->validate([
-            'email' => "required|email|string",
-            'password' => "required"
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|string',
+            'password' => 'required'
         ]);
-        $user = User::where("email", $request->email)->first();
 
-        if (!empty($user)) {
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid email or password',
+                'errors' => $validator->errors()
+            ], 400);
+        }
 
-            // User exists
-            if (Hash::check($request->password, $user->password)) {
+        $user = User::where('email', $request->email)->first();
 
-                // Password matched
-                $token = $user->createToken('mytoken')->accessToken;
+        if ($user && Hash::check($request->password, $user->password)) {
+            $token = $user->createToken('mytoken')->accessToken;
 
-                return response()->json([
-                    "status" => true,
-                    "message" => "Login successful",
-                    'token' => $token,
-                    "data" => []
-                ]);
-            } else {
-                return response()->json([
-                    "status" => false,
-                    'message' => 'Password didn`t match',
-                    "data" => []
-                ]);
-            }
+            return response()->json([
+                'status' => true,
+                'message' => 'Login successful',
+                'token' => $token,
+                'data' => []
+            ]);
         } else {
             return response()->json([
-                "status" => false,
-                'message' => 'Invalid Email Or Password'
-            ]);
+                'status' => false,
+                'message' => 'Invalid email or password'
+            ], 401);
         }
     }
-    // try{
+    // public function Login(Request $request)
+    // {
 
-    //     if (Auth::attempt($request->only('email','password'))) {
-    //         $user = Auth::user();
-    //         $token = $user->createToken('app')->accessToken;
+    //     $request->validate([
+    //         'email' => "required|email|string",
+    //         'password' => "required"
+    //     ]);
+    //     $user = User::where("email", $request->email)->first();
 
-    //         return response([
-    //             'message' => "Successfully Login",
-    //             'token' => $token,
-    //             'user' => $user
-    //         ],200); // States Code
+    //     if (!empty($user)) {
+
+    //         // User exists
+    //         if (Hash::check($request->password, $user->password)) {
+
+    //             // Password matched
+    //             $token = $user->createToken('mytoken')->accessToken;
+
+    //             return response()->json([
+    //                 "status" => true,
+    //                 "message" => "Login successful",
+    //                 'token' => $token,
+    //                 "data" => []
+    //             ]);
+    //         } else {
+    //             return response()->json([
+    //                 "status" => false,
+    //                 'message' => 'Password didn`t match',
+    //                 "data" => []
+    //             ]);
+    //         }
+    //     } else {
+    //         return response()->json([
+    //             "status" => false,
+    //             'message' => 'Invalid Email Or Password'
+    //         ]);
     //     }
-
-    // }catch(Exception $exception){
-    //     return response([
-    //         'message' => $exception->getMessage()
-    //     ],400);
     // }
-    // return response([
-    //     'message' => 'Invalid Email Or Password'
-    // ],401);
 
-    // }
+
+
+
+
+    public function profile()
+    {
+        $userData = auth()->user();
+        return response()->json([
+            "status" => true,
+            'message' => "Profile information",
+            "data" =>  $userData,
+            "id" => auth()->user()->id
+
+        ]);
+    }
+
+
+
+
 
     public function Logout(Request $request)
     {
 
-       $token = auth()->user()->token();
-       $token->revoke();
+        $token = auth()->user()->token();
+        $token->revoke();
 
-                return response()->json([
-                    "status" => true,
-                    'message' => "User Logged out successfully"
+        return response()->json([
+            "status" => true,
+            'message' => "User Logged out successfully"
 
-                ]);
-            }
-
+        ]);
     }
-
-
-
+}

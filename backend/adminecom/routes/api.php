@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\ProductDetailsController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\User\AuthController;
-
+use App\Http\Controllers\User\ForgetController;
 
 
  /////////////// User Login API Start ////////////////////////
@@ -24,6 +24,9 @@ Route::post('/register',[AuthController::class, 'Register']);
 
  // Logout Routes
  Route::post('/logout',[AuthController::class, 'Logout']);
+
+  // forgetpassword Routes
+  Route::post('/forgetpassword',[ForgetController::class, 'ForgetPassword']);
 
  /////////////// End User Login API Start ////////////////////////
 

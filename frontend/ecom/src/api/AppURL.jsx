@@ -8,6 +8,7 @@ class AppURL {
     static NotificationHistory  = this.BaseURL+"/notification"
     static UserLogin = this.BaseURL+"/login"
     static UserData = this.BaseURL+"/user"
+    static UserRegister = this.BaseURL+"/register"
     
     static ProductListByRemark(Remark){
         return this.BaseURL+"/productlistbyremark/"+Remark;

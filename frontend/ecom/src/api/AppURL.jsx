@@ -7,7 +7,8 @@ class AppURL {
     static AllSlider = this.BaseURL+"/allslider"
     static NotificationHistory  = this.BaseURL+"/notification"
     static UserLogin = this.BaseURL+"/login"
-
+    static UserData = this.BaseURL+"/user"
+    
     static ProductListByRemark(Remark){
         return this.BaseURL+"/productlistbyremark/"+Remark;
    }

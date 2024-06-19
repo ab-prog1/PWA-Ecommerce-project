@@ -32,7 +32,7 @@ class Register extends Component {
 
                localStorage.setItem('token', response.data.token);
                this.setState({ loggedIn: true })
-
+               this.props.setUser(response.data.user);
           }).catch(error => {
 
           });

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { Container,Row,Col, Form,Button } from 'react-bootstrap'
 import Login from '../../assets/images/login.png'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate  } from 'react-router-dom'
 import AppURL from '../../api/AppURL';
 import axios from 'axios'
 
@@ -29,7 +29,8 @@ class UserLogin extends Component {
             
                localStorage.setItem('token',response.data.token);
                this.setState({loggedIn:true})
- 
+               this.props.setUser(response.data.user);
+               
           }).catch(error=>{
 
           }); 
@@ -42,7 +43,7 @@ class UserLogin extends Component {
 
            /// After Login Redirect to Profile Page 
            if(this.state.loggedIn){
-                return <Navigate to={'/profile'} />
+                return <Navigate  to={'/profile'} />
            }
 
 
@@ -80,6 +81,7 @@ class UserLogin extends Component {
                          <img className="onboardBanner" src={Login} />
                     </Col>
                </Row>
+
 
 
 

@@ -1,46 +1,37 @@
-import React, { Component, Fragment } from 'react'
-import FooterDesktop from '../components/common/FooterDesktop'
-import FooterMobile from '../components/common/FooterMobile'
-import NavMenuDesktop from '../components/common/NavMenuDesktop'
-import NavMenuMobile from '../components/common/NavMenuMobile'
-import Register from '../components/common/Register'
+import React, { useEffect } from 'react';
+import { Fragment } from 'react';
+import NavMenuDesktop from '../components/common/NavMenuDesktop';
+import NavMenuMobile from '../components/common/NavMenuMobile';
+import Register from '../components/common/Register';
+import FooterDesktop from '../components/common/FooterDesktop';
+import FooterMobile from '../components/common/FooterMobile';
 
+const RegisterPage = ({ setUser, user }) => {
+    useEffect(() => {
+        window.scroll(0, 0);
+    }, []);
 
+    return (
+        <Fragment>
+            <div className="Desktop">
+                <NavMenuDesktop />
+            </div>
 
-export class RegisterPage extends Component {
+            <div className="Mobile">
+                <NavMenuMobile />
+            </div>
 
-     componentDidMount(){
-          window.scroll(0,0)
-     }
+            <Register setUser={setUser} user={user} />
 
-     render() {
-          const setUser = this.props.setUser;
-          const user = this.props.user;
+            <div className="Desktop">
+                <FooterDesktop />
+            </div>
 
+            <div className="Mobile">
+                <FooterMobile />
+            </div>
+        </Fragment>
+    );
+};
 
-          return (
-               <Fragment> 
-               <div className="Desktop">
-                <NavMenuDesktop /> 
-               </div>
-
-               <div className="Mobile">
-               <NavMenuMobile />  
-               </div>                       
-
-               <Register setUser={setUser} user ={user}  />   
-               
-               <div className="Desktop">
-               <FooterDesktop/>
-               </div>
-
-               <div className="Mobile">
-               <FooterMobile/>
-               </div>
-               
-          </Fragment>
-          )
-     } 
-}
-
-export default RegisterPage
+export default RegisterPage;

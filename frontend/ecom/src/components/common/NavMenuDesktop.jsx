@@ -2,8 +2,9 @@ import React, { Component, Fragment } from 'react'
 import {Navbar,Container, Row, Col,Button} from 'react-bootstrap';
 import Logo from '../../assets/images/easyshop.png';
 import Bars from '../../assets/images/bars.png';
+import {Link, Navigate} from "react-router-dom";
 import MegaMenuAll from '../home/MegaMenuAll';
-import {Link, Navigate } from "react-router-dom";
+ 
    
  class NavMenuDesktop extends Component {
 
@@ -31,11 +32,13 @@ import {Link, Navigate } from "react-router-dom";
                this.setState({SearchRedirectStauts:true})
           }
      }
+
      searchRedirect(){
           if(this.state.SearchRedirectStauts===true){
-               return <Navigate  to={"/productbysearch/"+this.state.Searchkey} />
+               return <Navigate to={"/productbysearch/"+this.state.Searchkey} />
           }
      }
+
 
 
      MenuBarClickHandler=()=>{
@@ -61,6 +64,43 @@ import {Link, Navigate } from "react-router-dom";
 
 
      render() {
+          let buttons;
+          if(localStorage.getItem('token')){
+               buttons = (
+                    <div>
+ <Link to="/favourite" className="btn"><i className="fa h4 fa-heart"></i><sup><span className="badge text-white bg-danger">3</span></sup>                  
+                   </Link> 
+
+                   <Link to="/notification" className="btn"><i className="fa h4 fa-bell"></i><sup><span className="badge text-white bg-danger">5</span></sup>                  
+                   </Link>
+                   
+                   <Link to="/profile" className="h4 btn">PROFILE</Link>
+                   <Link to="/register" className="h4 btn">LOGOUT</Link>
+                   
+       <Link to="/cart" className="cart-btn"><i className="fa fa-shopping-cart"></i> 3 Items </Link>
+                    </div> 
+               )
+
+          }else{
+               buttons = (
+                    <div>
+ <Link to="/favourite" className="btn"><i className="fa h4 fa-heart"></i><sup><span className="badge text-white bg-danger">3</span></sup>                  
+                   </Link> 
+
+                   <Link to="/notification" className="btn"><i className="fa h4 fa-bell"></i><sup><span className="badge text-white bg-danger">5</span></sup>                  
+                   </Link>
+                   
+                   <Link to="/login" className="h4 btn">LOGIN</Link>
+                   <Link to="/register" className="h4 btn">REGISTER</Link>
+                   
+       <Link to="/cart" className="cart-btn"><i className="fa fa-shopping-cart"></i> 3 Items </Link>
+                    </div> 
+               )
+
+          }
+
+
+
           return (
                <Fragment>
 <div className="TopSectionDown">
@@ -76,30 +116,23 @@ import {Link, Navigate } from "react-router-dom";
               <Link to="/"> <img className="nav-logo" src={Logo} /> </Link>
               </Col>
 
-              <Col className="p-1 mt-1" lg={4} md={4} sm={12} xs={12}>
-              <div className="input-group w-100">
-              <input onChange={this.SearchOnChange} type="text" className="form-control" />
+<Col className="p-1 mt-1" lg={4} md={4} sm={12} xs={12}>
+     <div className="input-group w-100">
+     <input onChange={this.SearchOnChange} type="text" className="form-control" />
 
-              <Button onClick={this.SeachOnClick} type="button" className="btn site-btn"><i className="fa fa-search"> </i> 
-              </Button>
-               </div>
-                 </Col>
+     <Button onClick={this.SeachOnClick} type="button" className="btn site-btn"><i className="fa fa-search"> </i> 
+     </Button>
+     </div>
+</Col>
 
               <Col className="p-1 mt-1" lg={4} md={4} sm={12} xs={12}>
               
-              <Link to="/favourite" className="btn"><i className="fa h4 fa-heart"></i><sup><span className="badge text-white bg-danger">3</span></sup>                  
-                   </Link>
+             {buttons}
 
-                   <Link to="/notification" className="btn"><i className="fa h4 fa-bell"></i><sup><span className="badge text-white bg-danger">5</span></sup>                  
-                   </Link>
-             
-                   <Link to="/login" className="h4 btn">LOGIN</Link>
-                   <Link to="/register" className="h4 btn">REGISTER</Link>
-       <Link to="/cart" className="cart-btn"><i className="fa fa-shopping-cart"></i> 3 Items </Link>
               </Col>
 
-         </Row>
-         {this.searchRedirect()}
+         </Row> 
+   {this.searchRedirect()}
     </Container>
 
   </Navbar>

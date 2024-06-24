@@ -38,4 +38,4 @@ class ResetPasswordPage extends Component {
      }
 }
 
-export default ResetPasswordPage
+export default  ResetPasswordPage;

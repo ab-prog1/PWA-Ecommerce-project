@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\User;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Auth;
-use App\Models\User;
+// use Illuminate\Http\Request;
+// use Auth;
+// use App\Models\User;
 
 use App\Http\Requests\ResetRequest;
-use DB;
+// use DB;
 use Illuminate\Support\Facades\Hash;
 
 class ResetController extends Controller
@@ -34,7 +35,7 @@ class ResetController extends Controller
          }
 
          DB::table('users')->where('email',$email)->update(['password' => $password]);
-         DB::table('password_resets')->where('email',$email)->delete();
+         DB::table('password_reset_tokens')->where('email',$email)->delete();
 
          return response([
             'message' => 'Password Change Successfully'

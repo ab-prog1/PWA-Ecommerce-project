@@ -41,11 +41,14 @@ class UserLogin extends Component {
 
      render() {
 
-           /// After Login Redirect to Profile Page 
-           if(this.state.loggedIn){
-                return <Navigate  to={'/profile'} />
-           }
+            /// After Login Redirect to Profile Page 
+            if(this.state.loggedIn){
+               return <Navigate to={'/profile'} />
+          }
 
+          if(localStorage.getItem('token')){
+              return <Navigate to="/profile" />
+         }
 
 
           return (

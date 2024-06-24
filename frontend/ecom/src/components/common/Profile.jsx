@@ -1,8 +1,17 @@
 import React, { Fragment } from "react";
+import { Navigate } from 'react-router';
 
 const Profile = ({ user }) => {
   const name = user ? user.name : "";
   const email = user ? user.email : "";
+  
+
+          if(!localStorage.getItem('token')){
+               return <Navigate to="/login" />
+          }
+
+
+
 
   return (
     <Fragment>

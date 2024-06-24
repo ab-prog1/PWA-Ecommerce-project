@@ -45,7 +45,11 @@ class Register extends Component {
 
           /// After Login Redirect to Profile Page 
           if(this.state.loggedIn){
-               return <Navigate to={'/login'} />
+               return <Navigate to={'/profile'} />
+          }
+
+          if(localStorage.getItem('token')){
+               return <Navigate to="/profile" />
           }
 
 

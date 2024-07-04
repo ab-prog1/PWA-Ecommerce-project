@@ -14,6 +14,7 @@ use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\ForgetController;
 use App\Http\Controllers\User\ResetController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Admin\ReviewController;
 
  /////////////// User Login API Start ////////////////////////
 
@@ -79,3 +80,9 @@ Route::get('/notification', [NotificationController::class, 'NotificationHistory
 
 // Search  route
 Route::get('/search/{key}', [ProductListController::class, 'ProductBySearch']);
+
+// Similar Product Route
+Route::get('/similar/{subcategory}',[ProductListController::class, 'SimilarProduct']);
+
+// Review Product Route
+Route::get('/reviewlist/{id}',[ReviewController::class, 'ReviewList']);

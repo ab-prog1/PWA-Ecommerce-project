@@ -14,9 +14,9 @@ class ProductDetailsPage extends Component {
   constructor(props){
     super(props); 
     let code = "";
-    if (props.match && props.match.params) {
-        code = props.match.params.code;
-    }
+//     if (props.match && props.match.params) {
+//         code = props.match.params.code;
+//     }
     this.state={
         code: code,
         ProductData:[],

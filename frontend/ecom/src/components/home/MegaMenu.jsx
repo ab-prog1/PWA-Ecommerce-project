@@ -33,12 +33,11 @@ class MegaMenu extends Component {
                         </button>
           <div className="panel">
       <ul>
-          {
-               (CatList.subcategory_name).map((SubList,i)=>{
-                    return <li><Link to={"productsubcategory/"+CatList.category_name+"/"+SubList.subcategory_name } className="accordionItem" >{SubList.subcategory_name} </Link></li>
-
-               })    
-          }
+      {
+    (CatList.subcategory_name).map((SubList, j) => {
+        return <li key={j.toString()}><Link to={"productsubcategory/"+CatList.category_name+"/"+SubList.subcategory_name } className="accordionItem" >{SubList.subcategory_name} </Link></li>
+    })    
+}
           
       </ul>
          </div> 

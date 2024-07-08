@@ -6,83 +6,85 @@ use App\Http\Controllers\Admin\VisitorController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\SiteInfoController;
 use App\Http\Controllers\Admin\CategoryController;
+
 use App\Http\Controllers\Admin\ProductListController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\ProductDetailsController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\ProductCartController;
+
+
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\ForgetController;
 use App\Http\Controllers\User\ResetController;
 use App\Http\Controllers\User\UserController;
-use App\Http\Controllers\Admin\ReviewController;
+
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
 
  /////////////// User Login API Start ////////////////////////
 
  // Login Routes
- Route::post('/login',[AuthController::class, 'Login']);
+Route::post('/login',[AuthController::class, 'Login']);
 
  // Register Routes
 Route::post('/register',[AuthController::class, 'Register']);
 
- // Logout Routes
- Route::post('/logout',[AuthController::class, 'Logout']);
+ // Forget Password Routes
+Route::post('/forgetpassword',[ForgetController::class, 'ForgetPassword']);
 
-  // forgetpassword Routes
-  Route::post('/forgetpassword',[ForgetController::class, 'ForgetPassword']);
+ // Reset Password Routes
+Route::post('/resetpassword',[ResetController::class, 'ResetPassword']);
 
-  // Resset password Routes
-  Route::post('/resetpassword',[ResetController::class, 'ResetPassword']);
+ // Current User Route
+Route::get('/user',[UserController::class, 'User'])->middleware('auth:api');
 
- // Current User Routes
- Route::get('/user',[UserController::class, 'User'])->middleware('auth:api');
+
  /////////////// End User Login API Start ////////////////////////
 
 
 
-Route::group ([
-    "middleware" => ["auth:api"]
-], function(){
-    Route::get("profile",[AuthController::class, "profile"]);
-    Route::get("logout",[AuthController::class, "logout"]);
-});
 
 
 
+// Get Visitor
+Route::get('/getvisitor',[VisitorController::class, 'GetVisitorDetails']);
+// Contact Page Route
+Route::post('/postcontact',[ContactController::class, 'PostContactDetails']);
 
+// Site Infro Route
+Route::get('/allsiteinfo',[SiteInfoController::class, 'AllSiteinfo']);
 
+// All Category Route
+Route::get('/allcategory',[CategoryController::class, 'AllCategory']);
 
+// ProductList Route
+Route::get('/productlistbyremark/{remark}',[ProductListController::class, 'ProductListByRemark']);
 
+Route::get('/productlistbycategory/{category}',[ProductListController::class, 'ProductListByCategory']);
 
+Route::get('/productlistbysubcategory/{category}/{subcategory}',[ProductListController::class, 'ProductListBySubCategory']);
 
+// Slider Route
+Route::get('/allslider',[SliderController::class, 'AllSlider']);
 
-// get visitor
-Route::get('/getvisitor', [VisitorController::class, 'GetVisitorDetails']);
-// contact page route
-Route::post('/postcontact', [ContactController::class, 'PostContactDetails']);
-// Site Info route
-Route::get('/allsiteinfo', [SiteInfoController::class, 'AllSiteinfo']);
-// All Category  route
-Route::get('/allcategory', [CategoryController::class, 'AllCategory']);
-// ProductList  route
-Route::get('/productlistbyremark/{remark}', [ProductListController::class, 'ProductListByRemark']);
+// Product Details Route
+Route::get('/productdetails/{id}',[ProductDetailsController::class, 'ProductDetails']);
 
-Route::get('/productlistbycategory/{category}', [ProductListController::class, 'ProductListByCategory']);
+// Notification Route
+Route::get('/notification',[NotificationController::class, 'NotificationHistory']);
 
-Route::get('/productlistbysubcategory/{category}/{subcategory}', [ProductListController::class, 'ProductListBySubCategory']);
-
-// Slider  route
-Route::get('/allslider', [SliderController::class, 'AllSlider']);
-// Prodouct Details  route
-Route::get('/productdetails/{id}', [ProductDetailsController::class, 'ProductDetails']);
-
-// Notification  route
-Route::get('/notification', [NotificationController::class, 'NotificationHistory']);
-
-// Search  route
-Route::get('/search/{key}', [ProductListController::class, 'ProductBySearch']);
+// Search Route
+Route::get('/search/{key}',[ProductListController::class, 'ProductBySearch']);
 
 // Similar Product Route
 Route::get('/similar/{subcategory}',[ProductListController::class, 'SimilarProduct']);
 
 // Review Product Route
 Route::get('/reviewlist/{id}',[ReviewController::class, 'ReviewList']);
+
+// Product Cart Route
+Route::post('/addtocart',[ProductCartController::class, 'addToCart']);

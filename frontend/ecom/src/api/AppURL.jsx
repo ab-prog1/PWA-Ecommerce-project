@@ -31,6 +31,16 @@ class AppURL {
 static ProductBySearch(searchkey){
      return this.BaseURL+"/search/"+searchkey;
 }
+static SimilarProduct(code){
+     return this.BaseURL+"/similar/"+code;
+}
+
+static ReviewList(code){
+     return this.BaseURL+"/reviewlist/"+code;
+}
+
+
+
 
 }
 

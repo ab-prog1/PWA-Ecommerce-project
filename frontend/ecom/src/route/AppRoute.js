@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom'; // Removed BrowserRouter as Router
 import AppURL from '../api/AppURL';
 import AboutPage from '../pages/AboutPage';
 import CartPage from '../pages/CartPage';
@@ -49,7 +49,7 @@ const AppRoute = () => {
           <Route path="/privacy" element={<PrivacyPage key={Date.now()} />} />
           <Route path="/refund" element={<RefundPage key={Date.now()} />} />
           <Route path="/about" element={<AboutPage key={Date.now()} />} />
-          <Route path="/productdetails/:code" element={<ProductDetailsPage key={Date.now()} />} />
+          <Route path="/productdetails/:code" element={<ProductDetailsPage user={user} key={Date.now()} />} />
           <Route path="/notification" element={<NotificationPage key={Date.now()} />} />
           <Route path="/favourite" element={<FavouritePage key={Date.now()} />} />
           <Route path="/cart" element={<CartPage key={Date.now()} />} />
@@ -63,4 +63,3 @@ const AppRoute = () => {
 };
 
 export default AppRoute;
-

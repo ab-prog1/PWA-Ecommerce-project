@@ -5,25 +5,21 @@ import FooterMobile from '../components/common/FooterMobile'
 import NavMenuDesktop from '../components/common/NavMenuDesktop'
 import NavMenuMobile from '../components/common/NavMenuMobile'
 import ProductDetails from '../components/ProductDetails/ProductDetails'
-// import SuggestedProduct from '../components/ProductDetails/SuggestedProduct'
+import SuggestedProduct from '../components/ProductDetails/SuggestedProduct'
 import axios from 'axios'
 import SliderLoading from '../components/PlaceHolder/SliderLoading'
 
 class ProductDetailsPage extends Component {
 
-  constructor(props){
-    super(props); 
-    let code = "";
-//     if (props.match && props.match.params) {
-//         code = props.match.params.code;
-//     }
-    this.state={
-        code: code,
-        ProductData:[],
-        isLoading:"",
-        mainDiv:"d-none" 
-    }
-}
+     constructor({match}){
+          super(); 
+          this.state={
+               code:match.params.code,
+               ProductData:[],
+               isLoading:"",
+               mainDiv:"d-none" 
+          }
+     }
 
      componentDidMount(){
           window.scroll(0,0)
@@ -40,7 +36,9 @@ class ProductDetailsPage extends Component {
 
      render() {
 
-          if(this.state.mainDiv === "d-none"){
+          const User = this.props.user;
+
+          if(this.state.mainDiv == "d-none"){
 
                return (
                     <Fragment> 
@@ -80,7 +78,7 @@ class ProductDetailsPage extends Component {
                     <NavMenuMobile />  
                     </div>                       
      
-                    <ProductDetails data={this.state.ProductData} /> 
+                    <ProductDetails data={this.state.ProductData} user={User} /> 
                     
                     
                     <div className="Desktop">

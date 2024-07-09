@@ -14,7 +14,13 @@ class ProductDetails extends Component {
      constructor(){
           super();
           this.state={
-               previewImg:"0"
+               previewImg:"0",
+               isSize:null,
+               isColor:null,
+               color:"",
+               size:"",
+               quantity:"",
+               productCode:null
           }
      }
 
@@ -24,8 +30,34 @@ class ProductDetails extends Component {
      }
 
 
+     addToCart = () => {
+          
+     }
+
+
+     colorOnChange = (event) => {
+          let color = event.target.value;
+          // alert(color);
+          this.setState({color:color})
+     }
+
+     sizeOnChange = (event) => {
+          let size = event.target.value;
+          // alert(size);
+          this.setState({size:size})
+     }
+
+     quantityOnChange = (event) => {
+          let quantity = event.target.value;
+          this.setState({quantity:quantity})
+     }
+
+
+ 
+
+
      PriceOption(price,special_price){
-          if(special_price==="na"){
+          if(special_price=="na"){
                return (
             <p className="product-price-on-card"> Price : {price}$ </p>
                )
@@ -74,7 +106,7 @@ class ProductDetails extends Component {
 
 
      var ColorDiv = "d-none"
-     if(color!=="na"){
+     if(color!="na"){
           let ColorArray = color.split(',');
           var ColorOption = ColorArray.map((ColorList,i)=>{
                return <option value={ColorList}> {ColorList} </option>
@@ -87,7 +119,7 @@ class ProductDetails extends Component {
 
 
      var SizeDiv = "d-none"
-     if(size!=="na"){
+     if(size!="na"){
           let SizeArray = size.split(',');
           var SizeOption = SizeArray.map((SizeList,i)=>{
                return <option value={SizeList}> {SizeList} </option>
@@ -96,6 +128,29 @@ class ProductDetails extends Component {
      }
      else{
           SizeDiv="d-none"
+     }
+
+
+     if(this.state.isSize===null){
+          if(size!="na"){
+               this.setState({isSize:"YES"})
+          }else{
+               this.setState({isSize:"NO"})
+          }
+     }
+
+
+     if(this.state.isColor===null){
+          if(color!="na"){
+               this.setState({isColor:"YES"})
+          }else{
+               this.setState({isColor:"NO"})
+          }
+     }
+
+
+     if(this.state.productCode===null){
+          this.setState({productCode:product_code})
      }
 
 
@@ -166,7 +221,7 @@ class ProductDetails extends Component {
 
                <div className={ColorDiv}>
                <h6 className="mt-2"> Choose Color  </h6>
-               <select className="form-control form-select">
+               <select onChange={this.colorOnChange} className="form-control form-select">
                <option>Choose Color</option>
                {ColorOption}
                </select> 
@@ -175,7 +230,7 @@ class ProductDetails extends Component {
 
                <div className={SizeDiv}>
                <h6 className="mt-2"> Choose Size  </h6>
-               <select className="form-control form-select">
+               <select onChange={this.sizeOnChange} className="form-control form-select">
                <option>Choose Size</option>
                {SizeOption}
                </select> 
@@ -183,7 +238,7 @@ class ProductDetails extends Component {
 
                <div className="" >
                <h6 className="mt-2"> Choose Quantity  </h6>
-               <select className="form-control form-select">
+               <select onChange={this.quantityOnChange} className="form-control form-select">
                <option>Choose Quantity</option>
                <option value="01">01</option>
                <option value="02">02</option>

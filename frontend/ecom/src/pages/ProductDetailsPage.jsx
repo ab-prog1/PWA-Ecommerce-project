@@ -11,15 +11,15 @@ import SliderLoading from '../components/PlaceHolder/SliderLoading'
 
 class ProductDetailsPage extends Component {
 
-     constructor({match}){
-          super(); 
-          this.state={
-               code:match.params.code,
-               ProductData:[],
-               isLoading:"",
-               mainDiv:"d-none" 
-          }
-     }
+     constructor(props) {
+          super(props);
+          this.state = {
+            code: props.match?.params?.code || '', // Use optional chaining and provide a fallback value
+            ProductData: [],
+            isLoading: "",
+            mainDiv: "d-none"
+          };
+        }
 
      componentDidMount(){
           window.scroll(0,0)

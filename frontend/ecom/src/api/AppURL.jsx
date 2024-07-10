@@ -38,7 +38,9 @@ static SimilarProduct(code){
 static ReviewList(code){
      return this.BaseURL+"/reviewlist/"+code;
 }
-
+static CartCount(product_code){
+     return this.BaseURL+"/cartcount/"+product_code;
+}
 
 
 

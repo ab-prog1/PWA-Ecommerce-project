@@ -19,7 +19,7 @@ use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\ForgetController;
 use App\Http\Controllers\User\ResetController;
 use App\Http\Controllers\User\UserController;
-
+use App\Http\Controllers\Admin\FavouriteController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
@@ -91,3 +91,6 @@ Route::post('/addtocart',[ProductCartController::class, 'addToCart']);
 
 // Cart Count Route
 Route::get('/cartcount/{product_code}',[ProductCartController::class, 'CartCount']);
+
+// Favourite Route
+Route::get('/favourite/{product_code}/{email}',[FavouriteController::class, 'AddFavourite']);

@@ -1,8 +1,9 @@
+
 import React, { Component, Fragment } from 'react'
 import {Navbar,Container, Row, Col,Button} from 'react-bootstrap';
 import Logo from '../../assets/images/easyshop.png';
 import Bars from '../../assets/images/bars.png';
-import {Link, Navigate } from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import MegaMenuAll from '../home/MegaMenuAll';
 import axios from 'axios';
 import AppURL from '../../api/AppURL';
@@ -52,7 +53,7 @@ import AppURL from '../../api/AppURL';
 
      searchRedirect(){
           if(this.state.SearchRedirectStauts===true){
-               return <Navigate  to={"/productbysearch/"+this.state.Searchkey} />
+               return <Navigate to={"/productbysearch/"+this.state.Searchkey} />
           }
      }
 

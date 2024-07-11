@@ -3,7 +3,7 @@ import { Container,Row,Col, Form,Button } from 'react-bootstrap'
 import Product1 from '../../assets/images/product/product1.png'
 import ReactDOM from 'react-dom'
 import Breadcrumb from 'react-bootstrap/Breadcrumb'
-import { Link, Navigate  } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css';
 import InnerImageZoom from 'react-inner-image-zoom';
 import SuggestedProduct from './SuggestedProduct'
@@ -25,7 +25,8 @@ class ProductDetails extends Component {
                quantity:"",
                productCode:null,
                addToCart:"Add To Cart",
-               PageRefreshStatus:false
+               PageRefreshStatus:false,
+               addToFav:"Favourite"
           }
      }
 
@@ -89,6 +90,40 @@ class ProductDetails extends Component {
      }  /// End addToCart Mehtod 
 
 
+     addToFav = () => {
+          this.setState({addToFav:"Adding..."})
+          let productCode = this.state.productCode;
+          let email = this.props.user.email;
+
+          if(!localStorage.getItem('token')){
+             cogoToast.warn('Please You have to Login First',{position:'top-right'});
+          }
+          else{
+
+               axios.get(AppURL.AddFavourite(productCode,email)).then(response =>{
+                    if(response.data===1){
+                         cogoToast.success("Product Is not in Favourite",{position:'top-right'});
+                         this.setState({addToFav:"Favourite"})
+                             
+                    }
+                    else{
+                         cogoToast.error("Your Request is not done ! Try Aagain",{position:'top-right'});
+                         this.setState({addToFav:"Favourite"})
+                    }
+                             
+               }).catch(error=>{
+                    cogoToast.error("Your Request is not done ! Try Aagain",{position:'top-right'});
+                         this.setState({addToFav:"Favourite"})
+     
+               });
+
+          } 
+
+     }  // end ADD TO FAV 
+
+
+
+
      colorOnChange = (event) => {
           let color = event.target.value;
           // alert(color);
@@ -110,7 +145,7 @@ class ProductDetails extends Component {
           if(this.state.PageRefreshStatus===true){
                let URL = window.location;
                return (
-                    <Navigate  to={URL} />
+                    <Navigate to={URL} />
                )
           }
      }
@@ -321,7 +356,8 @@ class ProductDetails extends Component {
     <button onClick={this.addToCart} className="btn site-btn m-1 "> <i className="fa fa-shopping-cart"></i>  {this.state.addToCart} </button>
 
                <button className="btn btn-primary m-1"> <i className="fa fa-car"></i> Order Now</button>
-               <button className="btn btn-primary m-1"> <i className="fa fa-heart"></i> Favourite</button>
+               
+               <button onClick={this.addToFav} className="btn btn-primary m-1"> <i className="fa fa-heart"></i> {this.state.addToFav} </button>
           </div>
           </Col>
      </Row>

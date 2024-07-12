@@ -51,7 +51,7 @@ const AppRoute = () => {
           <Route path="/about" element={<AboutPage key={Date.now()} />} />
           <Route path="/productdetails/:code" element={<ProductDetailsPage user={user} key={Date.now()} />} />
           <Route path="/notification" element={<NotificationPage key={Date.now()} />} />
-          <Route path="/favourite" element={<FavouritePage key={Date.now()} />} />
+          <Route path="/favourite" element={<FavouritePage user={user}  key={Date.now()} />} />
           <Route path="/cart" element={<CartPage key={Date.now()} />} />
           <Route path="/productcategory/:category" element={<ProductCategoryPage key={Date.now()} />} />
           <Route path="/productsubcategory/:category/:subcategory" element={<ProductSubCategoryPage key={Date.now()} />} />

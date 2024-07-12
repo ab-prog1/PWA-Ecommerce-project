@@ -4,7 +4,12 @@ class AppURL {
      static PostContact = this.BaseURL+"/postcontact"
      static AllSiteInfo = this.BaseURL+"/allsiteinfo"
      static AllCategoryDetails = this.BaseURL+"/allcategory"
-
+     static UserLogin = this.BaseURL+"/login"
+     static UserData = this.BaseURL+"/user"
+     static UserRegister = this.BaseURL+"/register"
+     static UserForgetPassword = this.BaseURL+"/forgetpassword"
+     static UserResetPassword = this.BaseURL+"/resetpassword"
+     
      static ProductListByRemark(Remark){
           return this.BaseURL+"/productlistbyremark/"+Remark;
      }
@@ -29,11 +34,7 @@ class AppURL {
           return this.BaseURL+"/search/"+searchkey;
      }
 
-     static UserLogin = this.BaseURL+"/login"
-     static UserData = this.BaseURL+"/user"
-     static UserRegister = this.BaseURL+"/register"
-     static UserForgetPassword = this.BaseURL+"/forgetpassword"
-     static UserResetPassword = this.BaseURL+"/resetpassword"
+    
 
      static SimilarProduct(code){
           return this.BaseURL+"/similar/"+code;
@@ -51,6 +52,10 @@ class AppURL {
 
      static AddFavourite(product_code,email){
           return this.BaseURL+"/favourite/"+product_code+"/"+email;
+     }
+
+     static FavouriteList(email){
+          return this.BaseURL+"/favouritelist/"+email;
      }
       
 }

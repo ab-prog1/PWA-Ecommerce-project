@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import {Container,Row,Col,Card,Button} from 'react-bootstrap'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import AppURL from '../../api/AppURL';
 import axios from 'axios'
 import cogoToast from 'cogo-toast';
@@ -36,7 +36,7 @@ class Favourite extends Component {
           axios.get(AppURL.FavouriteRemove(product_code,email)).then(response =>{               
               cogoToast.success("Product Item Remove",{position:'top-right'});   
               this.setState({PageRefreshStatus:true})       
-
+ 
           }).catch(error=>{
                cogoToast.error("Your Request is not done ! Try Aagain",{position:'top-right'});
           });
@@ -48,12 +48,16 @@ class Favourite extends Component {
           if(this.state.PageRefreshStatus===true){
                let URL = window.location;
                return (
-                    <Navigate to={URL} />
+                    <Redirect to={URL} />
                )
           }
      }
 
      render() { 
+
+          if(!localStorage.getItem('token')){
+               return <Redirect to="/login" />
+          }
 
           const FevList = this.state.ProductData;
           const MyView = FevList.map((ProductList,i)=>{

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import {Container,Row,Col,Card,Button} from 'react-bootstrap'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import AppURL from '../../api/AppURL';
 import axios from 'axios'
 import cogoToast from 'cogo-toast';
@@ -48,7 +48,7 @@ class Favourite extends Component {
           if(this.state.PageRefreshStatus===true){
                let URL = window.location;
                return (
-                    <Redirect to={URL} />
+                    <Navigate to={URL} />
                )
           }
      }

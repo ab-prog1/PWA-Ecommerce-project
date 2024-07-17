@@ -4,7 +4,7 @@ import AppURL from '../../api/AppURL';
 import Product1 from '../../assets/images/product/product1.png'
 import axios from 'axios'
 import cogoToast from 'cogo-toast';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 class Cart extends Component {
 
@@ -54,7 +54,7 @@ class Cart extends Component {
                let URL = window.location;
                return (
                     
-                    <Redirect to={URL} />
+                    <Navigate to={URL} />
                )
           }
      }

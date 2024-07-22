@@ -21,6 +21,8 @@ import SearchPage from '../pages/SearchPage';
 import UserLoginPage from '../pages/UserLoginPage';
 import axios from 'axios';
 import NavMenuDesktop from '../components/common/NavMenuDesktop';
+import OrderListPage from '../pages/OrderListPage';
+
 
 const AppRoute = () => {
   const [user, setUser] = useState({});
@@ -56,6 +58,9 @@ const AppRoute = () => {
           <Route path="/productcategory/:category" element={<ProductCategoryPage key={Date.now()} />} />
           <Route path="/productsubcategory/:category/:subcategory" element={<ProductSubCategoryPage key={Date.now()} />} />
           <Route path="/productbysearch/:searchkey" element={<SearchPage key={Date.now()} />} />
+          <Route exact path="/orderlist" element={<OrderListPage key={Date.now()} />} /> 
+
+
         </Routes>
     
     </Fragment>

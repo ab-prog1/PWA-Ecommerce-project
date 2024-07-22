@@ -9,6 +9,7 @@ class AppURL {
      static UserRegister = this.BaseURL+"/register"
      static UserForgetPassword = this.BaseURL+"/forgetpassword"
      static UserResetPassword = this.BaseURL+"/resetpassword"
+     static CartOrder = this.BaseURL+"/cartorder"
      
      static ProductListByRemark(Remark){
           return this.BaseURL+"/productlistbyremark/"+Remark;

@@ -58,8 +58,7 @@ const AppRoute = () => {
           <Route path="/productcategory/:category" element={<ProductCategoryPage key={Date.now()} />} />
           <Route path="/productsubcategory/:category/:subcategory" element={<ProductSubCategoryPage key={Date.now()} />} />
           <Route path="/productbysearch/:searchkey" element={<SearchPage key={Date.now()} />} />
-          <Route exact path="/orderlist" element={<OrderListPage key={Date.now()} />} /> 
-
+          <Route exact path="/orderlist" element={<OrderListPage user={user} key={Date.now()} />} /> 
 
         </Routes>
     

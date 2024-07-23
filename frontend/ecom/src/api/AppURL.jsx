@@ -10,6 +10,11 @@ class AppURL {
      static UserForgetPassword = this.BaseURL+"/forgetpassword"
      static UserResetPassword = this.BaseURL+"/resetpassword"
      static CartOrder = this.BaseURL+"/cartorder"
+     static AllSlider = this.BaseURL+"/allslider"
+     static NotificationHistory = this.BaseURL+"/notification"
+     static addToCart = this.BaseURL+"/addtocart"
+
+
      
      static ProductListByRemark(Remark){
           return this.BaseURL+"/productlistbyremark/"+Remark;
@@ -23,14 +28,12 @@ class AppURL {
           return this.BaseURL+"/productlistbysubcategory/"+category+"/"+subcategory;
      }
 
-     static AllSlider = this.BaseURL+"/allslider"
-
+ 
      static ProductDetails(code){
           return this.BaseURL+"/productdetails/"+code;
      }
 
-     static NotificationHistory = this.BaseURL+"/notification"
-
+     
      static ProductBySearch(searchkey){
           return this.BaseURL+"/search/"+searchkey;
      }
@@ -45,7 +48,7 @@ class AppURL {
           return this.BaseURL+"/reviewlist/"+code;
      }
 
-     static addToCart = this.BaseURL+"/addtocart"
+    
 
      static CartCount(product_code){
           return this.BaseURL+"/cartcount/"+product_code;
@@ -73,6 +76,10 @@ class AppURL {
 
      static CartItemMinus(id,quantity,price){
           return this.BaseURL+"/cartitemminus/"+id+"/"+quantity+"/"+price;
+     }
+
+     static OrderListByUser(email){
+          return this.BaseURL+"/orderlistbyuser/"+email;
      }
 
 

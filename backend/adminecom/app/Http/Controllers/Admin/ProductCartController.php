@@ -41,12 +41,12 @@ class ProductCartController extends Controller
             'color' => "Color: ".$color,
             'quantity' => $quantity,
             'unit_price' => $unit_price,
-            'total_price' => $total_price, 
+            'total_price' => $total_price,
 
         ]);
 
         return $result;
-    } // End Method 
+    } // End Method
 
 
 
@@ -54,7 +54,7 @@ class ProductCartController extends Controller
         $product_code = $request->product_code;
         $result = ProductCart::count();
         return $result;
-    } // End Method 
+    } // End Method
 
 
     public function CartList(Request $request){
@@ -63,7 +63,7 @@ class ProductCartController extends Controller
         $result = ProductCart::where('email',$email)->get();
         return $result;
 
-    } // End Method 
+    } // End Method
 
 
     public function RemoveCartList(Request $request){
@@ -72,7 +72,7 @@ class ProductCartController extends Controller
         $result = ProductCart::where('id',$id)->delete();
         return $result;
 
-    }// End Method 
+    }// End Method
 
 
     public function CartItemPlus(Request $request){
@@ -85,7 +85,7 @@ class ProductCartController extends Controller
 
          return $result;
 
-    }// End Method 
+    }// End Method
 
         public function CartItemMinus(Request $request){
          $id = $request->id;
@@ -97,7 +97,7 @@ class ProductCartController extends Controller
 
          return $result;
 
-    }// End Method 
+    }// End Method
 
 
 
@@ -152,7 +152,16 @@ class ProductCartController extends Controller
         }
             return $cartInsertDeleteResult;
 
-    }// End Method 
+    }// End Method
+
+
+
+    public function OrderListByUser(Request $request){
+        $email = $request->email;
+        $result = CartOrder::where('email',$email)->orderBy('id','DESC')->get();
+        return $result;
+
+    }// End Method
 
 
 }

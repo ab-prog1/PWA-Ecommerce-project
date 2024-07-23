@@ -175,7 +175,7 @@ class Cart extends Component {
      PageRedirect = () => {
           if(this.state.PageRedirectStaus===true){
                return (
-                    <Redirect to="/orderlist" />
+                    <Navigate to="/orderlist" />
                )
 
           }

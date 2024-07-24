@@ -13,7 +13,7 @@ class AppURL {
      static AllSlider = this.BaseURL+"/allslider"
      static NotificationHistory = this.BaseURL+"/notification"
      static addToCart = this.BaseURL+"/addtocart"
-
+     static PostReview = this.BaseURL+"/postreview"
 
      
      static ProductListByRemark(Remark){

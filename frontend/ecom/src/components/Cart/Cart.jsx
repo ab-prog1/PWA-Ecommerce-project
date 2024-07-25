@@ -1,312 +1,220 @@
-import React, { Component, Fragment } from 'react'
-import {Navbar,Container, Row, Col,Button,Card} from 'react-bootstrap';
-import AppURL from '../../api/AppURL';
-import Product1 from '../../assets/images/product/product1.png'
-import axios from 'axios'
+import React, { useState, useEffect, Fragment } from 'react';
+import {  Container, Row, Col, Button, Card } from 'react-bootstrap';
+import { Navigate  } from 'react-router-dom';
+import axios from 'axios';
 import cogoToast from 'cogo-toast';
-import { Navigate } from 'react-router-dom';
+import AppURL from '../../api/AppURL';
+import { useNavigate } from 'react-router-dom';
 
-class Cart extends Component {
+const Cart = ({ user }) => {
+  const [productData, setProductData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false); // Remove this line if isLoading is not used
+    const [mainDiv, setMainDiv] = useState("d-none");
+  const [pageRefreshStatus, setPageRefreshStatus] = useState(false);
+  const [pageRedirectStatus, setPageRedirectStatus] = useState(false);
+  const [confirmBtn, setConfirmBtn] = useState(''); // Remove this line if setConfirmBtn is not used
+  const [city, setCity] = useState("");
+  const [payment, setPayment] = useState("");
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const navigate = useNavigate();
 
-     constructor(){
-          super();
-          this.state={
-               ProductData:[],
-               isLoading:"",
-               mainDiv:"d-none",
-               PageRefreshStatus:false,
-               PageRedirectStaus:false,
+  useEffect(() => {
+    axios.get(AppURL.CartList(user.email))
+      .then(response => {
+        setProductData(response.data);
+        setIsLoading("d-none");
+        setMainDiv("");
+      })
+      .catch(error => {
+        cogoToast.error("Failed to load cart items.", { position: 'top-right' });
+      });
+  }, [user.email]);
 
-               confirmBtn:"Confirm Order",
-               city:"",
-               payment:"",
-               name:"",
-               address:""
-                              
-          }
-     }
+  useEffect(() => {
+    if (pageRefreshStatus) {
+      window.location.reload();
+    }
+  }, [pageRefreshStatus]);
 
+  useEffect(() => {
+    if (pageRedirectStatus) {
+      navigate('/orderlist');
+    }
+  }, [pageRedirectStatus, navigate]);
 
-     componentDidMount(){
-          axios.get(AppURL.CartList(this.props.user.email)).then(response =>{
-               
-               this.setState({ProductData:response.data,isLoading:"d-none",
-               mainDiv:" "});         
+  const removeItem = id => {
+    axios.get(AppURL.RemoveCartList(id))
+      .then(response => {
+        if (response.data === 1) {
+          cogoToast.success("Cart Item Removed", { position: 'top-right' });
+          setPageRefreshStatus(true);
+        } else {
+          cogoToast.error("Request not completed! Try again", { position: 'top-right' });
+        }
+      })
+      .catch(error => {
+        cogoToast.error("Request not completed! Try again", { position: 'top-right' });
+      });
+  };
 
-          }).catch(error=>{
+  const itemPlus = (id, quantity, price) => {
+    axios.get(AppURL.CartItemPlus(id, quantity, price))
+      .then(response => {
+        if (response.data === 1) {
+          cogoToast.success("Item Quantity Increased", { position: 'top-right' });
+          setPageRefreshStatus(true);
+        } else {
+          cogoToast.error("Request not completed! Try again", { position: 'top-right' });
+        }
+      })
+      .catch(error => {
+        cogoToast.error("Request not completed! Try again", { position: 'top-right' });
+      });
+  };
 
-          });
-     } 
+  const itemMinus = (id, quantity, price) => {
+    axios.get(AppURL.CartItemMinus(id, quantity, price))
+      .then(response => {
+        if (response.data === 1) {
+          cogoToast.success("Item Quantity Decreased", { position: 'top-right' });
+          setPageRefreshStatus(true);
+        } else {
+          cogoToast.error("Request not completed! Try again", { position: 'top-right' });
+        }
+      })
+      .catch(error => {
+        cogoToast.error("Request not completed! Try again", { position: 'top-right' });
+      });
+  };
 
+  const confirmOnClick = () => {
+    if (!city) {
+      cogoToast.error("Please Select City", { position: 'top-right' });
+      return;
+    }
+    if (!payment) {
+      cogoToast.error("Please Select Payment Method", { position: 'top-right' });
+      return;
+    }
+    if (!name) {
+      cogoToast.error("Please Enter Your Name", { position: 'top-right' });
+      return;
+    }
+    if (!address) {
+      cogoToast.error("Please Enter Your Address", { position: 'top-right' });
+      return;
+    }
 
-     removeItem = (id) => {
+    const invoice = new Date().getTime();
+    const formData = new FormData();
+    formData.append('city', city);
+    formData.append('payment_method', payment);
+    formData.append('name', name);
+    formData.append('delivery_address', address);
+    formData.append('email', user.email);
+    formData.append('invoice_no', invoice);
+    formData.append('delivery_charge', "00");
 
-      axios.get(AppURL.RemoveCartList(id)).then(response =>{ 
+    axios.post(AppURL.CartOrder, formData)
+      .then(response => {
+        if (response.data === 1) {
+          cogoToast.success("Order Request Received", { position: 'top-right' });
+          setPageRedirectStatus(true);
+        } else {
+          cogoToast.error("Request not completed! Try again", { position: 'top-right' });
+        }
+      })
+      .catch(error => {
+        cogoToast.error("Request not completed! Try again", { position: 'top-right' });
+      });
+  };
 
-     if(response.data===1){
-          cogoToast.success("Cart Item Remove",{position:'top-right'}); 
-          this.setState({PageRefreshStatus:true})   
-     }else{
-          cogoToast.error("Your Request is not done ! Try Aagain",{position:'top-right'});
-     }
-          }).catch(error=>{
-               cogoToast.error("Your Request is not done ! Try Aagain",{position:'top-right'});
+  if (!localStorage.getItem('token')) {
+    return <Navigate to="/login" />;
+  }
 
-          });
+  const totalPriceSum = productData.reduce((sum, item) => sum + parseInt(item.total_price), 0);
 
-     } // End Remove Item Mehtod 
-
-     PageRefresh =() => {
-          if(this.state.PageRefreshStatus===true){
-               let URL = window.location;
-               return (
-                    
-                    <Navigate to={URL} />
-               )
-          }
-     }
-
-      
-
-     ItemPlus = (id,quantity,price) => {
-
-          axios.get(AppURL.CartItemPlus(id,quantity,price)).then(response =>{ 
-    
-         if(response.data===1){
-              cogoToast.success("Item Quantity Increased",{position:'top-right'}); 
-              this.setState({PageRefreshStatus:true})   
-         }else{
-              cogoToast.error("Your Request is not done ! Try Aagain",{position:'top-right'});
-         }
-              }).catch(error=>{
-                   cogoToast.error("Your Request is not done ! Try Aagain",{position:'top-right'});
-    
-              });
-    
-         } // End ItemPlus Mehtod 
-
-
-         ItemMinus = (id,quantity,price) => {
-
-          axios.get(AppURL.CartItemMinus(id,quantity,price)).then(response =>{ 
-    
-         if(response.data===1){
-              cogoToast.success("Item Quantity Decreased",{position:'top-right'}); 
-              this.setState({PageRefreshStatus:true})   
-         }else{
-              cogoToast.error("Your Request is not done ! Try Aagain",{position:'top-right'});
-         }
-              }).catch(error=>{
-                   cogoToast.error("Your Request is not done ! Try Aagain",{position:'top-right'});
-    
-              });
-    
-         } // End ItemMinus Mehtod 
-
-
-         cityOnChange = (event) => {
-              let city = event.target.value;
-              this.setState({city:city})
-         }
-
-         paymentMethodOnChange = (event) => {
-          let payment = event.target.value;
-          this.setState({payment:payment})
-     }
-
-     nameOnChange = (event) => {
-          let name = event.target.value;
-          this.setState({name:name})
-     }
-
-     addressOnChange = (event) => {
-          let address = event.target.value;
-          this.setState({address:address})
-     }
-
-     confirmOnClick = () => {
-          let city = this.state.city;
-          let payment = this.state.payment;
-          let name = this.state.name;
-          let address = this.state.address;
-          let email = this.props.user.email;
-
-          if(city.length===0){
-               cogoToast.error("Please Select City",{position:'top-right'});
-          }
-          else if(payment.length===0){
-               cogoToast.error("Please Select Payment",{position:'top-right'});
-          }
-          else if(name.length===0){
-               cogoToast.error("Please Select Your Name",{position:'top-right'});
-          }
-          else if(address.length===0){
-               cogoToast.error("Please Select Your Address",{position:'top-right'});
-          }
-          else{
-
-               let invoice = new Date().getTime();
-               let MyFromData = new FormData();
-               MyFromData.append('city',city)
-               MyFromData.append('payment_method',payment)
-               MyFromData.append('name',name)
-               MyFromData.append('delivery_address',address)
-               MyFromData.append('email',email)
-               MyFromData.append('invoice_no',invoice)
-               MyFromData.append('delivery_charge',"00");
-
-     axios.post(AppURL.CartOrder,MyFromData).then(response =>{ 
-
-          if(response.data===1){
-               cogoToast.success("Order Request Received",{position:'top-right'}); 
-               this.setState({PageRedirectStaus:true})   
-          }else{
-               cogoToast.error("Your Request is not done ! Try Aagain",{position:'top-right'});
-          }
-               }).catch(error=>{
-                    cogoToast.error("Your Request is not done ! Try Aagain",{position:'top-right'});
-     
-               });
-          } 
-
-     } // edn confim order method 
-
-     
-     PageRedirect = () => {
-          if(this.state.PageRedirectStaus===true){
-               return (
-                    <Navigate to="/orderlist" />
-               )
-
-          }
-     }
-
-
-     render() { 
-
-
-          if(!localStorage.getItem('token')){
-               return <Navigate to="/login" />
-          }
-
-          const MyList = this.state.ProductData;
-          let totalPriceSum=0;
-          const MyView = MyList.map((ProductList,i)=>{
-           totalPriceSum = totalPriceSum+parseInt(ProductList.total_price)    
-               return <div>
-               <Card >                
-     <Card.Body>
-     <Row>
-          <Col md={3} lg={3} sm={6} xs={6}>
-               <img className="cart-product-img" src={ProductList.image} />
+  return (
+    <Fragment>
+      <Container fluid={true}>
+        <div className="section-title text-center mb-55">
+          <h2>Product Cart List</h2>
+        </div>
+        <Row>
+          <Col className="p-1" lg={7} md={7} sm={12} xs={12}>
+            {productData.map((item, i) => (
+              <Card key={i}>
+                <Card.Body>
+                  <Row>
+                    <Col md={3} lg={3} sm={6} xs={6}>
+                      <img className="cart-product-img" src={item.image} alt={item.product_name} />
+                    </Col>
+                    <Col md={6} lg={6} sm={6} xs={6}>
+                      <h5 className="product-name">{item.product_name}</h5>
+                      <h6> Quantity = {item.quantity} </h6>
+                      <p>{item.size} | {item.color}</p>
+                      <h6>Price = {item.unit_price} x {item.quantity} = {item.total_price}$</h6>
+                    </Col>
+                    <Col md={3} lg={3} sm={12} xs={12}>
+                      <Button onClick={() => removeItem(item.id)} className="btn mt-2 mx-1 btn-lg site-btn"><i className="fa fa-trash-alt"></i> </Button>
+                      <Button onClick={() => itemPlus(item.id, item.quantity, item.unit_price)} className="btn mt-2 mx-1 btn-lg site-btn"><i className="fa fa-plus"></i> </Button>
+                      <Button onClick={() => itemMinus(item.id, item.quantity, item.unit_price)} className="btn mt-2 mx-1 btn-lg site-btn"><i className="fa fa-minus"></i> </Button>
+                    </Col>
+                  </Row>
+                </Card.Body>
+              </Card>
+            ))}
           </Col>
-
-          <Col md={6} lg={6} sm={6} xs={6}>
-          <h5 className="product-name">{ProductList.product_name}</h5>
-          <h6> Quantity = {ProductList.quantity} </h6>
-          <p>{ProductList.size} | {ProductList.color}</p>
-          <h6>Price = {ProductList.unit_price} x {ProductList.quantity} = {ProductList.total_price}$</h6>
-          </Col>
-
-          <Col md={3} lg={3} sm={12} xs={12}>
-          
-          <Button onClick={()=>this.removeItem(ProductList.id)} className="btn mt-2 mx-1 btn-lg site-btn"><i className="fa fa-trash-alt"></i> </Button>
-
-          <Button onClick={()=>this.ItemPlus(ProductList.id,ProductList.quantity,ProductList.unit_price)} className="btn mt-2 mx-1 btn-lg site-btn"><i className="fa fa-plus"></i> </Button>
-
-          <Button onClick={()=>this.ItemMinus(ProductList.id,ProductList.quantity,ProductList.unit_price)} className="btn mt-2 mx-1 btn-lg site-btn"><i className="fa fa-minus"></i> </Button>
-          
-          </Col>
-     </Row>              
-     </Card.Body>               
-</Card>
-
-
-               </div> 
-          })
-
-
-
-          return (
-              <Fragment>
-
-                   <Container fluid={true}>   
-
-    <div className="section-title text-center mb-55"><h2>Product Cart List</h2>   
-          </div>
-
-
-
-                   <Row> 
-     <Col className="p-1" lg={7} md={7} sm={12} xs={12} >
-         {MyView}
-     </Col> 
-
-
-     <Col className="p-1" lg={5} md={5} sm={12} xs={12} >
-     <div className="card p-2">
-               <div className="card-body">
-                    <div className="container-fluid ">
-                         <div className="row">
-<div className="col-md-12 p-1  col-lg-12 col-sm-12 col-12">
-     <h5 className="Product-Name text-danger">Total Due: {totalPriceSum}  $</h5>
-</div>
-</div>
-<div className="row">
-<div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
-     <label className="form-label">Choose City</label>
-     <select onChange={this.cityOnChange} className="form-control">
-     <option value="">Choose</option>
-     <option value="Dhaka">Assam</option>
-     <option value="Dhaka">Bihar </option>
-     <option value="Dhaka">Goa </option>
-     <option value="Dhaka">Gujarat </option>
-     <option value="Dhaka">Himachal Pradesh </option>
-     <option value="Dhaka">Punjab  </option>
-     </select>
-</div>
-<div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
-     <label className="form-label">Choose Payment Method</label>
-     <select onChange={this.paymentMethodOnChange}  className="form-control">
-     <option value="">Choose</option>
-     <option value="Cash On Delivery">Cash On Delivery</option>
-     <option value="Cash On Delivery">Stripe</option>
-     </select>
-</div>
-<div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
-     <label className="form-label">Your Name</label>
-     <input onChange={this.nameOnChange}  className="form-control" type="text" placeholder=""/>
-</div>
-
-<div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
-     <label className="form-label">Delivery Address</label>
-     <textarea onChange={this.addressOnChange}   rows={2}  className="form-control" type="text" placeholder=""/>
-</div>
-<div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
-     <button onClick={this.confirmOnClick}  className="btn  site-btn"> {this.state.confirmBtn} </button>
-</div>
-</div>
+          <Col className="p-1" lg={5} md={5} sm={12} xs={12}>
+            <div className="card p-2">
+              <div className="card-body">
+                <div className="container-fluid">
+                  <div className="row">
+                    <div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
+                      <h5 className="Product-Name text-danger">Total Due: {totalPriceSum} $</h5>
                     </div>
-               </div>
-               </div>
-     </Col> 
+                    <div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
+                      <label className="form-label">Choose City</label>
+                      <select onChange={(e) => setCity(e.target.value)} className="form-control">
+                        <option value="">Choose</option>
+                        <option value="Assam">Assam</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                        <option value="Punjab">Punjab</option>
+                      </select>
+                    </div>
+                    <div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
+                      <label className="form-label">Choose Payment Method</label>
+                      <select onChange={(e) => setPayment(e.target.value)} className="form-control">
+                        <option value="">Choose</option>
+                        <option value="Cash On Delivery">Cash On Delivery</option>
+                        <option value="Stripe">Stripe</option>
+                      </select>
+                    </div>
+                    <div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
+                      <label className="form-label">Your Name</label>
+                      <input onChange={(e) => setName(e.target.value)} className="form-control" type="text" placeholder="" />
+                    </div>
+                    <div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
+                      <label className="form-label">Delivery Address</label>
+                      <textarea onChange={(e) => setAddress(e.target.value)} rows={2} className="form-control" type="text" placeholder="" />
+                    </div>
+                    <div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
+                      <Button onClick={confirmOnClick} className="btn site-btn">{confirmBtn}</Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </Fragment>
+  );
+};
 
-
-
-
-
-
-                   </Row>
-
-               </Container>
-
-            {this.PageRefresh()}
-            
-            {this.PageRedirect()}
-
-              </Fragment>
-          )
-     }
-}
-
-export default Cart
+export default Cart;

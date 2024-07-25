@@ -3,7 +3,7 @@ import { Container,Row,Col, Form,Button } from 'react-bootstrap'
 import Product1 from '../../assets/images/product/product1.png'
 import ReactDOM from 'react-dom'
 import Breadcrumb from 'react-bootstrap/Breadcrumb'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css';
 import InnerImageZoom from 'react-inner-image-zoom';
 import SuggestedProduct from './SuggestedProduct'
@@ -153,7 +153,7 @@ class ProductDetails extends Component {
           if(this.state.PageRedirectStauts===true){
              
                return (
-                    <Redirect to="/cart" />
+                    <Navigate to="/cart" />
                )
           }
      }
@@ -219,7 +219,7 @@ class ProductDetails extends Component {
           if(this.state.PageRefreshStatus===true){
                let URL = window.location;
                return (
-                    <Redirect to={URL} />
+                    <Navigate to={URL} />
                )
           }
      }

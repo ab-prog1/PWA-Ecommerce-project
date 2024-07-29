@@ -14,6 +14,7 @@ const OrderList = (props) => {
   const [productName, setProductName] = useState('');
   const [productCode, setProductCode] = useState('');
   const [reviewModal, setReviewModal] = useState(false);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     const email = props.user.email;
@@ -23,6 +24,16 @@ const OrderList = (props) => {
       })
       .catch(error => {
         console.error(error);
+        if (error.response) {
+          // Server responded with a status other than 200 range
+          setMessage(error.response.data.message || 'Server Error');
+      } else if (error.request) {
+          // Request was made but no response received
+          setMessage('Network Error');
+      } else {
+          // Something happened in setting up the request
+          setMessage('Error: ' + error.message);
+      }
       });
   }, [props.user.email]);
 

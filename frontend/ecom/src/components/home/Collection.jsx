@@ -1,98 +1,78 @@
-import React, { Component, Fragment } from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col, Card, Alert } from "react-bootstrap";
 import AppURL from "../../api/AppURL";
 import axios from "axios";
 import CollectionLoading from "../PlaceHolder/CollectionLoading";
 import { Link } from "react-router-dom";
 
-class Collection extends Component {
-  constructor() {
-    super();
-    this.state = {
-      ProductData: [],
-      isLoading: "",
-      mainDiv: "d-none",
-    };
-  }
+const Collection = () => {
+  const [productData, setProductData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [mainDiv, setMainDiv] = useState("d-none");
+  const [error, setError] = useState(null);
 
-  componentDidMount() {
-    axios
-      .get(AppURL.ProductListByRemark("COLLECTION"))
-      .then((response) => {
-        this.setState({
-          ProductData: response.data,
-          isLoading: "d-none",
-          mainDiv: " ",
-        });
-      })
-      .catch((error) => {});
-  }
-
-  render() {
-    const CollectionList = this.state.ProductData;
-    const MyView = CollectionList.map((CollectionList, i) => {
-      if (CollectionList.special_price == "na") {
-        return (
-          <Col className="p-0" xl={3} lg={3} md={3} sm={6} xs={6}>
-            <Link
-              className="text-link"
-              to={"/productdetails/" + CollectionList.id}
-            >
-              <Card className="image-box card w-100">
-                <img className="center w-75" src={CollectionList.image} />
-                <Card.Body>
-                  <p className="product-name-on-card">{CollectionList.title}</p>
-                  <p className="product-price-on-card">
-                    Price : ${CollectionList.price}
-                  </p>
-                </Card.Body>
-              </Card>
-            </Link>
-          </Col>
-        );
-      } else {
-        return (
-          <Col className="p-0" xl={3} lg={3} md={3} sm={6} xs={6}>
-            <Link
-              className="text-link"
-              to={"/productdetails/" + CollectionList.id}
-            >
-              <Card className="image-box card w-100">
-                <img className="center w-75" src={CollectionList.image} />
-                <Card.Body>
-                  <p className="product-name-on-card">{CollectionList.title}</p>
-                  <p className="product-price-on-card">
-                    Price :{" "}
-                    <strike className="text-secondary">
-                      ${CollectionList.price}
-                    </strike>{" "}
-                    ${CollectionList.special_price}
-                  </p>
-                </Card.Body>
-              </Card>
-            </Link>
-          </Col>
-        );
+  useEffect(() => {
+    const fetchProductData = async () => {
+      try {
+        const response = await axios.get(AppURL.ProductListByRemark("COLLECTION"));
+        setProductData(response.data);
+        setIsLoading("d-none");
+        setMainDiv(" ");
+      } catch (err) {
+        console.error(err);
+        setError("An error occurred while fetching product data.");
+        setIsLoading("d-none");
+        setMainDiv(" ");
       }
-    });
+    };
+    fetchProductData();
+  }, []);
 
-    return (
-      <Fragment>
-        <CollectionLoading isLoading={this.state.isLoading} />
+  const CollectionList = productData;
+  const MyView = CollectionList.map((item, i) => (
+    <Col className="p-0" xl={3} lg={3} md={3} sm={6} xs={6} key={i}>
+      <Link className="text-link" to={"/productdetails/" + item.id}>
+        <Card className="image-box card w-100">
+          <img className="center w-75" src={item.image} />
+          <Card.Body>
+            <p className="product-name-on-card">{item.title}</p>
+            <p className="product-price-on-card">
+              Price :
+              {item.special_price === "na" ? (
+                `$${item.price}`
+              ) : (
+                <>
+                  <strike className="text-secondary">${item.price}</strike> ${item.special_price}
+                </>
+              )}
+            </p>
+          </Card.Body>
+        </Card>
+      </Link>
+    </Col>
+  ));
 
-        <div className={this.state.mainDiv}>
-          <Container className="text-center" fluid={true}>
-            <div className="section-title text-center mb-55">
-              <h2> PRODUCT COLLECTION</h2>
-              <p>Some Of Our Exclusive Collection, You May Like</p>
-            </div>
+  return (
+    <>
+      <CollectionLoading isLoading={isLoading} />
 
-            <Row>{MyView}</Row>
-          </Container>
-        </div>
-      </Fragment>
-    );
-  }
-}
+      <div className={mainDiv}>
+        {error && (
+          <Alert variant="danger" className="mt-3">
+            {error}
+          </Alert>
+        )}
+        <Container className="text-center" fluid={true}>
+          <div className="section-title text-center mb-55">
+            <h2>PRODUCT COLLECTION</h2>
+            <p>Some Of Our Exclusive Collection, You May Like</p>
+          </div>
+
+          <Row>{MyView}</Row>
+        </Container>
+      </div>
+    </>
+  );
+};
 
 export default Collection;

@@ -1,13 +1,11 @@
-import React, { Component, Fragment } from 'react'
+import React from 'react';
 
-class Slider extends Component {
-     render() {
-          return (
-               <Fragment>
-                     <h1>Slider</h1>
-               </Fragment>
-          )
-     }
-}
+const Slider = () => {
+  return (
+    <React.Fragment>
+      <h1>Slider</h1>
+    </React.Fragment>
+  );
+};
 
-export default Slider
+export default Slider;

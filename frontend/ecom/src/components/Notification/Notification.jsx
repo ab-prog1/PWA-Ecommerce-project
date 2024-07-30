@@ -1,114 +1,91 @@
-import React, { Component, Fragment } from 'react'
-import { Container,Row,Col, Card,Button,Modal } from 'react-bootstrap'
+import React, { useState, useEffect, Fragment } from 'react';
+import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap';
 import AppURL from '../../api/AppURL';
-import axios from 'axios'
+import axios from 'axios';
 import { Navigate } from 'react-router';
 
-class Notification extends Component {
+const Notification = () => {
+  const [show, setShow] = useState(false);
+  const [notificationData, setNotificationData] = useState([]);
+  const [isLoading, setIsLoading] = useState("");
+  const [mainDiv, setMainDiv] = useState("d-none");
+  const [notificationMsg, setNotificationMsg] = useState("");
+  const [notificationTitle, setNotificationTitle] = useState("");
+  const [notificationDate, setNotificationDate] = useState("");
 
-     constructor(){
-          super();
-          this.state={
-               show:false,
-               NotificationData:[],
-               isLoading:"",
-               mainDiv:"d-none",
-               Notificationmsg:"",
-               Notificationtitle:"",
-               Notificationdate:""
-          }
-     }
+  useEffect(() => {
+    axios.get(AppURL.NotificationHistory)
+      .then(response => {
+        setNotificationData(response.data);
+        setIsLoading("d-none");
+        setMainDiv(" ");
+      })
+      .catch(error => {
+        // Handle error
+      });
+  }, []);
 
+  const handleClose = () => setShow(false);
 
+  const handleShow = (event) => {
+    setShow(true);
+    const Nmsg = event.target.getAttribute("data-message");
+    const Ntitle = event.target.getAttribute("data-title");
+    const Ndate = event.target.getAttribute("data-date");
+    setNotificationMsg(Nmsg);
+    setNotificationTitle(Ntitle);
+    setNotificationDate(Ndate);
+  };
 
-     componentDidMount(){
-        axios.get(AppURL.NotificationHistory).then(response =>{
-             
-             this.setState({NotificationData:response.data,isLoading:"d-none",
-             mainDiv:" "});         
+  if (!localStorage.getItem('token')) {
+    return <Navigate to="/login" />;
+  }
 
-        }).catch(error=>{
+  const MyView = notificationData.map((notification, i) => (
+    <Col className="p-1" md={6} lg={6} sm={12} xs={12} key={i}>
+      <Card onClick={handleShow} className="notification-card">
+        <Card.Body>
+          <h6>{notification.title}</h6>
+          <p className="py-1 px-0 text-primary m-0">
+            <i className="fa fa-bell"></i> Date: {notification.date} | Status: Unread
+          </p>
+          <Button
+            data-title={notification.title}
+            data-date={notification.date}
+            data-message={notification.message}
+            className="btn btn-danger"
+          >
+            Details
+          </Button>
+        </Card.Body>
+      </Card>
+    </Col>
+  ));
 
-        });
-   } 
+  return (
+    <Fragment>
+      <Container className="TopSection">
+        <Row>{MyView}</Row>
+      </Container>
 
-
-
-      handleClose = () =>{
-          this.setState({ show:false})
-      };  
-
-      handleShow = (event) => {
-           this.setState({ show:true });
-           let Nmsg = event.target.getAttribute("data-message");
-           let Ntitle = event.target.getAttribute("data-title");
-           let Ndate = event.target.getAttribute("data-date");
-           this.setState({Notificationmsg:Nmsg,Notificationtitle:Ntitle,Notificationdate:Ndate})
-      }; 
-
-     render() {
-
-          if(!localStorage.getItem('token')){
-               return <Navigate to="/login" />
-          }
-
-          const NotificationList = this.state.NotificationData;
-          const MyView = NotificationList.map((NotificationList,i)=>{
-            return   <Col className=" p-1 " md={6} lg={6} sm={12} xs={12}>
-            <Card onClick={this.handleShow} className="notification-card">
-                <Card.Body>
-                    <h6>{NotificationList.title}</h6>
-                    <p className="py-1  px-0 text-primary m-0"><i className="fa  fa-bell"></i>   Date: {NotificationList.date} | Status: Unread</p>
-
-   <Button data-title={NotificationList.title} data-date={NotificationList.date} data-message={NotificationList.message} className="btn btn-danger">Details </Button>
-                </Card.Body>
-            </Card>
-        </Col>
-
-
-          })
-
-
-
-          return (
-               <Fragment>
-
-                    <Container className="TopSection">
-
-    <Row>
-      
-            {MyView}
-
-    </Row>
-</Container>
-
-
-<Modal show={this.state.show} onHide={this.handleClose}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-           <h6><i className="fa fa-bell"></i> Date: {this.state.Notificationdate}</h6>
+          <h6>
+            <i className="fa fa-bell"></i> Date: {notificationDate}
+          </h6>
         </Modal.Header>
         <Modal.Body>
-             <h6> {this.state.Notificationtitle}</h6>
-             <p>
-             {this.state.Notificationmsg}
-             </p>
-             
-
-
+          <h6>{notificationTitle}</h6>
+          <p>{notificationMsg}</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={this.handleClose}>
+          <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          
         </Modal.Footer>
       </Modal>
+    </Fragment>
+  );
+};
 
-
-
-               </Fragment>
-          )
-     }
-}
-
-export default Notification
+export default Notification;

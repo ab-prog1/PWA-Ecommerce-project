@@ -1,39 +1,24 @@
-import React, { Component } from 'react'
+import React from 'react';
 
-class SliderLoading extends Component {
-     render() {
+const SliderLoading = ({ isLoading }) => {
+  return (
+    <div className={isLoading}>
+      <div className="row">
+        <div className="col-3">
+          <div className="ph-row">
+            {/* Generate multiple placeholder columns */}
+            {Array(8).fill(null).map((_, index) => (
+              <div className="ph-col-12" key={index}></div>
+            ))}
+          </div>
+        </div>
 
-          let isLoading = this.props.isLoading; 
+        <div className="col-9">
+          <div className="ph-picture"></div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-          return (
-               <div className={isLoading}>
- 
-               <div className="row">
-                    <div className="col-3">
-                    <div className="ph-row">
-                    <div className="ph-col-12"></div>
-                    <div className="ph-col-12"></div>
-                    <div className="ph-col-12"></div>
-                    <div className="ph-col-12"></div>
-                    <div className="ph-col-12"></div>
-                     <div className="ph-col-12"></div>
-                     <div className="ph-col-12"></div>
-                     <div className="ph-col-12"></div>
-                   
-                    </div>
-
-                    </div>
-
-                    <div className="col-9">
-                    <div className="ph-picture"></div>
-                    </div>
-
-               </div>
- 
-                    
-               </div>
-          )
-     }
-}
-
-export default SliderLoading
+export default SliderLoading;

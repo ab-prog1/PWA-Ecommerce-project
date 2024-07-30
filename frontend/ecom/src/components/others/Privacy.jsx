@@ -1,110 +1,83 @@
-import React, { Component, Fragment } from 'react'
-import { Container,Row,Col, Form,Button } from 'react-bootstrap'
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Breadcrumb } from 'react-bootstrap';
 import AppURL from '../../api/AppURL';
-import axios from 'axios'
+import axios from 'axios';
 import ReactHtmlParser from 'react-html-parser';
-import Breadcrumb from 'react-bootstrap/Breadcrumb'
 import { Link } from 'react-router-dom';
 
-class Privacy extends Component {
-     constructor(){
-          super();
-          this.state={
-               privacy:"",
-               loaderDiv:"",
-               mainDiv:"d-none"
-          }
-     }
+const Privacy = () => {
+  const [privacy, setPrivacy] = useState("");
+  const [loaderDiv, setLoaderDiv] = useState("");
+  const [mainDiv, setMainDiv] = useState("d-none");
 
-     componentDidMount(){
-          axios.get(AppURL.AllSiteInfo).then(response =>{
-               let StatusCode = response.status;
-               if(StatusCode==200){
-                    let JsonData = (response.data)[0]['privacy'];
-                    this.setState({privacy:JsonData,loaderDiv:"d-none",mainDiv:""});
-               } 
+  useEffect(() => {
+    axios.get(AppURL.AllSiteInfo)
+      .then(response => {
+        if (response.status === 200) {
+          const JsonData = response.data[0]['privacy'];
+          setPrivacy(JsonData);
+          setLoaderDiv("d-none");
+          setMainDiv("");
+        }
+      })
+      .catch(error => {
+        console.error("There was an error fetching the data!", error);
+      });
+  }, []);
 
-          }).catch(error=>{
-
-          });
-     }
-
-
-
-     render() { 
-          return (
-               <Fragment>
-               <Container>
-
-               <div className="breadbody">
-               <Breadcrumb>
-  <Breadcrumb.Item> <Link to="/"> Home </Link> </Breadcrumb.Item>
-  <Breadcrumb.Item> <Link to="/privacy"> Privacy </Link> </Breadcrumb.Item>   
-</Breadcrumb>
-</div>
-
-
-
-                    <Row className="p-2">
-            <Col className="shadow-sm bg-white mt-2" md={12} lg={12} sm={12} xs={12}>
-
-
-            <div className={this.state.loaderDiv}>
-
-<div class="ph-item">
-<div class="ph-col-12">        
-<div class="ph-row">           
-<div class="ph-col-4"></div>
-<div class="ph-col-8 empty"></div>
-<div class="ph-col-6"></div>
-<div class="ph-col-6 empty"></div>
-<div class="ph-col-12"></div>
-<div class="ph-col-12"></div>
-<div class="ph-col-12"></div>
-<div class="ph-col-12"></div>
-</div>
-</div>
-</div>
-
-
-<div class="ph-item">
-<div class="ph-col-12">        
-<div class="ph-row">           
-<div class="ph-col-4"></div>
-<div class="ph-col-8 empty"></div>
-<div class="ph-col-6"></div>
-<div class="ph-col-6 empty"></div>
-<div class="ph-col-12"></div>
-<div class="ph-col-12"></div>
-<div class="ph-col-12"></div>
-<div class="ph-col-12"></div>
-</div>
-</div>
-</div>
-
-
-
-</div>
-
- 
-
-
-<div className={this.state.mainDiv}>
-      <h4 className="section-title-login">Privacy Page</h4>
-      <p className="section-title-contact">
-
-      { ReactHtmlParser(this.state.privacy) }       
-      </p>
-
+  return (
+    <Container>
+      <div className="breadbody">
+        <Breadcrumb>
+          <Breadcrumb.Item><Link to="/">Home</Link></Breadcrumb.Item>
+          <Breadcrumb.Item><Link to="/privacy">Privacy</Link></Breadcrumb.Item>
+        </Breadcrumb>
       </div>
-     
-     
-                         </Col>
-                    </Row>
-               </Container>
-          </Fragment>
-          )
-     }
-}
 
-export default Privacy
+      <Row className="p-2">
+        <Col className="shadow-sm bg-white mt-2" md={12} lg={12} sm={12} xs={12}>
+          <div className={loaderDiv}>
+            <div className="ph-item">
+              <div className="ph-col-12">
+                <div className="ph-row">
+                  <div className="ph-col-4"></div>
+                  <div className="ph-col-8 empty"></div>
+                  <div className="ph-col-6"></div>
+                  <div className="ph-col-6 empty"></div>
+                  <div className="ph-col-12"></div>
+                  <div className="ph-col-12"></div>
+                  <div className="ph-col-12"></div>
+                  <div className="ph-col-12"></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="ph-item">
+              <div className="ph-col-12">
+                <div className="ph-row">
+                  <div className="ph-col-4"></div>
+                  <div className="ph-col-8 empty"></div>
+                  <div className="ph-col-6"></div>
+                  <div className="ph-col-6 empty"></div>
+                  <div className="ph-col-12"></div>
+                  <div className="ph-col-12"></div>
+                  <div className="ph-col-12"></div>
+                  <div className="ph-col-12"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className={mainDiv}>
+            <h4 className="section-title-login">Privacy Page</h4>
+            <p className="section-title-contact">
+              {ReactHtmlParser(privacy)}
+            </p>
+          </div>
+        </Col>
+      </Row>
+    </Container>
+  );
+};
+
+export default Privacy;

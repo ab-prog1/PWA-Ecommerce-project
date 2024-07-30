@@ -1,26 +1,23 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import AppURL from "../../api/AppURL";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-class MegaMenuAll extends Component {
-  constructor() {
-    super();
-    this.state = {
-      MenuData: [],
-    };
-  }
+const MegaMenuAll = () => {
+  const [MenuData, setMenuData] = useState([]);
 
-  componentDidMount() {
+  useEffect(() => {
     axios
       .get(AppURL.AllCategoryDetails)
       .then((response) => {
-        this.setState({ MenuData: response.data });
+        setMenuData(response.data);
       })
-      .catch((error) => {});
-  }
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
-  MenuItemClick = (event) => {
+  const MenuItemClick = (event) => {
     event.target.classList.toggle("active");
     var panel = event.target.nextElementSibling;
     if (panel.style.maxHeight) {
@@ -30,42 +27,47 @@ class MegaMenuAll extends Component {
     }
   };
 
-  render() {
-    const CatList = this.state.MenuData;
-
-    const MyView = CatList.map((category, i) => {
-      return (
-        <div key={i.toString()}>
-          <button onClick={this.MenuItemClick} className="accordionAll">
-            <img className="accordionMenuIconAll" src={category.category_image} alt={category.category_name} />
-            &nbsp; {category.category_name}
-          </button>
-          <div className="panelAll">
-            <ul>
-              {category.subcategory_name.map((subCategory, j) => {
-                return (
-                  <li key={j.toString()}>
-                    <Link
-                      to={"/productsubcategory/" + category.category_name + "/" + subCategory.subcategory_name}
-                      className="accordionItem"
-                    >
-                      {subCategory.subcategory_name}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
-      );
-    });
-
+  const MyView = MenuData.map((category, i) => {
     return (
-      <div className="accordionMenuDivAll">
-        <div className="accordionMenuDivInsideAll">{MyView}</div>
+      <div key={i.toString()}>
+        <button onClick={MenuItemClick} className="accordionAll">
+          <img
+            className="accordionMenuIconAll"
+            src={category.category_image}
+            alt={category.category_name}
+          />
+          &nbsp; {category.category_name}
+        </button>
+        <div className="panelAll">
+          <ul>
+            {category.subcategory_name.map((subCategory, j) => {
+              return (
+                <li key={j.toString()}>
+                  <Link
+                    to={
+                      "/productsubcategory/" +
+                      category.category_name +
+                      "/" +
+                      subCategory.subcategory_name
+                    }
+                    className="accordionItem"
+                  >
+                    {subCategory.subcategory_name}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
     );
-  }
-}
+  });
+
+  return (
+    <div className="accordionMenuDivAll">
+      <div className="accordionMenuDivInsideAll">{MyView}</div>
+    </div>
+  );
+};
 
 export default MegaMenuAll;

@@ -1,105 +1,60 @@
-import React, { Component, Fragment } from 'react'
-import AppURL from '../api/AppURL'
-import FooterDesktop from '../components/common/FooterDesktop'
-import FooterMobile from '../components/common/FooterMobile'
-import NavMenuDesktop from '../components/common/NavMenuDesktop'
-import NavMenuMobile from '../components/common/NavMenuMobile'
-import ProductDetails from '../components/ProductDetails/ProductDetails'
-import SuggestedProduct from '../components/ProductDetails/SuggestedProduct'
-import axios from 'axios'
-import SliderLoading from '../components/PlaceHolder/SliderLoading'
+import React, { useState, useEffect } from 'react';
+import AppURL from '../api/AppURL';
+import FooterDesktop from '../components/common/FooterDesktop';
+import FooterMobile from '../components/common/FooterMobile';
+import NavMenuDesktop from '../components/common/NavMenuDesktop';
+import NavMenuMobile from '../components/common/NavMenuMobile';
+import ProductDetails from '../components/ProductDetails/ProductDetails';
+import SliderLoading from '../components/PlaceHolder/SliderLoading';
+import axios from 'axios';
 
-class ProductDetailsPage extends Component {
+const ProductDetailsPage = ({ match, user }) => {
+  const [code, setCode] = useState(match?.params?.code || '');
+  const [productData, setProductData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [mainDiv, setMainDiv] = useState('d-none');
 
-     constructor(props) {
-          super(props);
-          this.state = {
-            code: props.match?.params?.code || '', // Use optional chaining and provide a fallback value
-            ProductData: [],
-            isLoading: "",
-            mainDiv: "d-none"
-          };
-        }
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    axios.get(AppURL.ProductDetails(code))
+      .then(response => {
+        setProductData(response.data);
+        setIsLoading(false);
+        setMainDiv('');
+      })
+      .catch(error => {
+        console.error(error);
+        setIsLoading(false);
+      });
+  }, [code]);
 
-     componentDidMount(){
-          window.scroll(0,0)
+  return (
+    <>
+      <div className="Desktop">
+        <NavMenuDesktop />
+      </div>
 
-          axios.get(AppURL.ProductDetails(this.state.code)).then(response =>{
-               
-               this.setState({ProductData:response.data,isLoading:"d-none",
-               mainDiv:""});         
+      <div className="Mobile">
+        <NavMenuMobile />
+      </div>
 
-          }).catch(error=>{
+      {mainDiv === 'd-none' ? (
+        <SliderLoading isLoading={isLoading} />
+      ) : (
+        <>
+          <ProductDetails data={productData} user={user} />
+        </>
+      )}
 
-          });
-     }
+      <div className="Desktop">
+        <FooterDesktop />
+      </div>
 
-     render() {
+      <div className="Mobile">
+        <FooterMobile />
+      </div>
+    </>
+  );
+};
 
-          const User = this.props.user;
-
-          if(this.state.mainDiv == "d-none"){
-
-               return (
-                    <Fragment> 
-                    <div className="Desktop">
-                     <NavMenuDesktop /> 
-                    </div>
-     
-                    <div className="Mobile">
-                    <NavMenuMobile />  
-                    </div>                       
-     
-                     <SliderLoading isLoading={this.state.isLoading} />
-                    
-                    
-                    <div className="Desktop">
-                    <FooterDesktop/>
-                    </div>
-     
-                    <div className="Mobile">
-                    <FooterMobile/>
-                    </div>
-                    
-               </Fragment>
-               )
-
-
-          }else{
-
-
-               return (
-                    <Fragment> 
-                    <div className="Desktop">
-                     <NavMenuDesktop /> 
-                    </div>
-     
-                    <div className="Mobile">
-                    <NavMenuMobile />  
-                    </div>                       
-     
-                    <ProductDetails data={this.state.ProductData} user={User} /> 
-                    
-                    
-                    <div className="Desktop">
-                    <FooterDesktop/>
-                    </div>
-     
-                    <div className="Mobile">
-                    <FooterMobile/>
-                    </div>
-                    
-               </Fragment>
-               )
-
-
-          }
-
-
-
-
-          
-     }
-}
-
-export default ProductDetailsPage
+export default ProductDetailsPage;

@@ -1,112 +1,44 @@
-import React, { Component, Fragment } from 'react'
-import {Container,Row,Col,Card} from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect, Fragment } from 'react';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import AppURL from '../../api/AppURL';
-import axios from 'axios'
+import axios from 'axios';
 
-class ReviewList extends Component {
+const ReviewList = ({ code }) => {
+    const [reviewData, setReviewData] = useState([]);
 
-     constructor(){
-          super();
-          this.state={
-               ReviewData:[],
-          }
-     }
+    useEffect(() => {
+        axios.get(AppURL.ReviewList(code))
+            .then(response => {
+                setReviewData(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching reviews', error);
+            });
+    }, [code]);
 
+    const renderStars = (rating) => {
+        return Array.from({ length: rating }, (_, i) => (
+            <i key={i} className="fa fa-star text-success"></i>
+        ));
+    };
 
-     componentDidMount(){ 
-          let code = this.props.code;
+    const MyView = reviewData.map((review, i) => (
+        <div key={i}>
+            <p className="p-0 m-0">
+                <span className="Review-Title">{review.reviewer_name}</span>
+                <span>{renderStars(parseInt(review.reviewer_rating))}</span>
+            </p>
+            <p>{review.reviewer_comments}</p>
+        </div>
+    ));
 
-          axios.get(AppURL.ReviewList(code)).then(response =>{
+    return (
+        <div>
+            <h6 className="mt-2">REVIEWS</h6>
+            {reviewData.length > 0 ? MyView : <p>There have no review Yet</p>}
+        </div>
+    );
+};
 
-               this.setState({ReviewData:response.data});         
-
-          }).catch(error=>{
-
-          });
-     }
-
-
-     render() {
-
-          const MyList = this.state.ReviewData;
-
-     if(MyList.length>0){
-          const MyView = MyList.map((ReviewList,i)=>{
-
-          if(ReviewList.reviewer_rating ==="1"){
-               return <div>
-               <p className=" p-0 m-0"><span className="Review-Title">{ReviewList.reviewer_name}</span> <span className="text-success"><i className="fa fa-star"></i> </span> </p>
-                  <p>{ReviewList.reviewer_comments}</p>
-
-                     </div> 
-          }
-          else if(ReviewList.reviewer_rating ==="2"){
-
-               return <div>
-               <p className=" p-0 m-0"><span className="Review-Title">{ReviewList.reviewer_name}</span> <span className="text-success"><i className="fa fa-star"></i> <i className="fa fa-star"></i>   </span> </p>
-                  <p>{ReviewList.reviewer_comments}</p>
-
-                     </div>
-
-
-          }
-          else if(ReviewList.reviewer_rating ==="3"){
-               return <div>
-               <p className=" p-0 m-0"><span className="Review-Title">{ReviewList.reviewer_name}</span> <span className="text-success"><i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star"></i> </span> </p>
-                  <p>{ReviewList.reviewer_comments}</p>
-
-                     </div>
-
-
-          }
-          else if(ReviewList.reviewer_rating ==="4"){
-               return <div>
-               <p className=" p-0 m-0"><span className="Review-Title">{ReviewList.reviewer_name}</span> <span className="text-success"><i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star"></i> </span> </p>
-                  <p>{ReviewList.reviewer_comments}</p>
-
-                     </div>
-
-
-          }
-          else if(ReviewList.reviewer_rating ==="5"){
-               return <div>
-               <p className=" p-0 m-0"><span className="Review-Title">{ReviewList.reviewer_name}</span> <span className="text-success"><i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star"></i><i className="fa fa-star"></i> </span> </p>
-                  <p>{ReviewList.reviewer_comments}</p>
-
-                     </div> 
-
-          } // end else if 
-
-
-          }) // end map
-
-          return (
-               <div>
-
-<h6 className="mt-2">REVIEWS</h6>
-
-          {MyView} 
-
-               </div>
-          )
-
-          }
-          else{
-               return (
-                    <div>
-
-     <h6 className="mt-2">REVIEWS</h6>
-
-              <p>There have no review Yet </p>
-
-                    </div>
-               )
-
-
-          } 
-
-     }
-}
-
-export default ReviewList
+export default ReviewList;

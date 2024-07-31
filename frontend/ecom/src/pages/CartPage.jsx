@@ -1,43 +1,38 @@
-import React, { Component, Fragment } from 'react'
-import Cart from '../components/Cart/Cart'
-import FooterDesktop from '../components/common/FooterDesktop'
-import FooterMobile from '../components/common/FooterMobile'
-import NavMenuDesktop from '../components/common/NavMenuDesktop'
-import NavMenuMobile from '../components/common/NavMenuMobile'
+import React, { useEffect, Fragment } from 'react';
+import Cart from '../components/Cart/Cart';
+import FooterDesktop from '../components/common/FooterDesktop';
+import FooterMobile from '../components/common/FooterMobile';
+import NavMenuDesktop from '../components/common/NavMenuDesktop';
+import NavMenuMobile from '../components/common/NavMenuMobile';
 
-class CartPage extends Component {
+const CartPage = (props) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-     componentDidMount(){
-          window.scroll(0,0)
-     } 
+  const User = props.user;
 
-     render() {
+  return (
+    <Fragment>
+      <div className="Desktop">
+        <NavMenuDesktop />
+      </div>
 
-          const User = this.props.user;
+      <div className="Mobile">
+        <NavMenuMobile />
+      </div>
 
-          return (
-              <Fragment> 
-               <div className="Desktop">
-                <NavMenuDesktop /> 
-               </div>
+      <Cart user={User} />
 
-               <div className="Mobile">
-               <NavMenuMobile />  
-               </div>                       
+      <div className="Desktop">
+        <FooterDesktop />
+      </div>
 
-               <Cart user={User} /> 
-               
-               <div className="Desktop">
-               <FooterDesktop/>
-               </div>
+      <div className="Mobile">
+        <FooterMobile />
+      </div>
+    </Fragment>
+  );
+};
 
-               <div className="Mobile">
-               <FooterMobile/>
-               </div>
-               
-          </Fragment>
-          )
-     }
-}
-
-export default CartPage
+export default CartPage;

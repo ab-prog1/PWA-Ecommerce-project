@@ -1,15 +1,18 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useContext } from 'react';
 import {  Container, Row, Col, Button, Card } from 'react-bootstrap';
 import { Navigate  } from 'react-router-dom';
 import axios from 'axios';
 import cogoToast from 'cogo-toast';
 import AppURL from '../../api/AppURL';
 import { useNavigate } from 'react-router-dom';
+import {UserContext} from '../../route/AppRoute';
 
-const Cart = ({ user }) => {
+
+
+const Cart = ({ props }) => {
   const [productData, setProductData] = useState([]);
   const [isLoading, setIsLoading] = useState(false); // Remove this line if isLoading is not used
-    const [mainDiv, setMainDiv] = useState("d-none");
+  const [mainDiv, setMainDiv] = useState("d-none");
   const [pageRefreshStatus, setPageRefreshStatus] = useState(false);
   const [pageRedirectStatus, setPageRedirectStatus] = useState(false);
   const [confirmBtn, setConfirmBtn] = useState(''); // Remove this line if setConfirmBtn is not used
@@ -17,6 +20,7 @@ const Cart = ({ user }) => {
   const [payment, setPayment] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {

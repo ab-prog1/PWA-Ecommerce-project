@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import AppURL from '../api/AppURL';
 import FooterDesktop from '../components/common/FooterDesktop';
 import FooterMobile from '../components/common/FooterMobile';
@@ -11,12 +11,16 @@ import HomeTop from '../components/home/HomeTop';
 import HomeTopMobile from '../components/home/HomeTopMobile';
 import NewArrival from '../components/home/NewArrival';
 import axios from 'axios';
+import {UserContext} from '../route/AppRoute';
 
-const HomePage = () => {
+
+
+const HomePage = (props) => {
+  const { user, setUser } = useContext(UserContext);
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchVisitorDetails();
-  }, []);
+  }, [user]);
 
   const fetchVisitorDetails = async () => {
     try {

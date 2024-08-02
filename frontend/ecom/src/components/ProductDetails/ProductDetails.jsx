@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import InnerImageZoom from 'react-inner-image-zoom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
@@ -9,8 +9,11 @@ import ReviewList from './ReviewList';
 import cogoToast from 'cogo-toast';
 import AppURL from '../../api/AppURL';
 import axios from 'axios';
+import {UserContext} from '../../route/AppRoute';
 
-const ProductDetails = ({ data, user }) => {
+
+
+const ProductDetails = ({ props }) => {
     const [previewImg, setPreviewImg] = useState('0');
     const [isSize, setIsSize] = useState(null);
     const [isColor, setIsColor] = useState(null);
@@ -23,16 +26,18 @@ const ProductDetails = ({ data, user }) => {
     const [pageRedirectStatus, setPageRedirectStatus] = useState(false);
     const [pageRefreshStatus, setPageRefreshStatus] = useState(false);
     const [addToFav, setAddToFav] = useState('Favourite');
+    const { user, setUser } = useContext(UserContext);
+
 
     useEffect(() => {
-        if (data.productList.length) {
-            const product = data.productList[0];
+        if (props.productList.length) {
+            const product = props.productList[0];
             setPreviewImg(previewImg === '0' ? product.image : previewImg);
             setProductCode(product.product_code);
             setIsSize(product.size !== 'na' ? 'YES' : 'NO');
             setIsColor(product.color !== 'na' ? 'YES' : 'NO');
         }
-    }, [data.productList, previewImg]);
+    }, [props.productList, previewImg, user]);
 
     const imgOnClick = (event) => {
         const imgSrc = event.target.getAttribute('src');
@@ -147,7 +152,7 @@ const ProductDetails = ({ data, user }) => {
         }
     };
 
-    const { productList, productDetails } = data;
+    const { productList, productDetails } = props;
     if (!productList.length || !productDetails.length) return null;
 
     const product = productList[0];

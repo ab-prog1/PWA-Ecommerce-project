@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useContext } from 'react';
 import { Navbar, Container, Row, Col, Button } from 'react-bootstrap';
 import Logo from '../../assets/images/easyshop.png';
 import Bars from '../../assets/images/bars.png';
@@ -6,6 +6,7 @@ import { Link, Navigate } from "react-router-dom";
 import MegaMenuAll from '../home/MegaMenuAll';
 import axios from 'axios';
 import AppURL from '../../api/AppURL';
+import {UserContext} from '../../route/AppRoute';
 
 const NavMenuDesktop = (props) => {
     const [sideNavState, setSideNavState] = useState("sideNavClose");
@@ -13,13 +14,14 @@ const NavMenuDesktop = (props) => {
     const [searchKey, setSearchKey] = useState("");
     const [searchRedirectStatus, setSearchRedirectStatus] = useState(false);
     const [cartCount, setCartCount] = useState(0);
+    const { user, setUser } = useContext(UserContext);
 
     useEffect(() => {
         let product_code = props.product_code;
         axios.get(AppURL.CartCount(product_code)).then((response) => {
             setCartCount(response.data);
         });
-    }, [props.product_code]);
+    }, [props.product_code , user]);
 
     const logout = () => {
         localStorage.clear();

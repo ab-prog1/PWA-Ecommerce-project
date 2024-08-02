@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useCallback, Fragment } from 'react';
+import React, { useState, useEffect, useCallback, Fragment, useContext  } from 'react';
 import AppURL from '../../api/AppURL';
 import axios from 'axios';
 import { Navbar, Container, Row, Col, Button, Card, Modal } from 'react-bootstrap';
 import cogoToast from 'cogo-toast';
 import { Navigate } from 'react-router-dom';
+import {UserContext} from '../../route/AppRoute';
+
 
 const OrderList = (props) => {
   const [productData, setProductData] = useState([]);
@@ -15,6 +17,7 @@ const OrderList = (props) => {
   const [productCode, setProductCode] = useState('');
   const [reviewModal, setReviewModal] = useState(false);
   const [message, setMessage] = useState('');
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     const email = props.user.email;

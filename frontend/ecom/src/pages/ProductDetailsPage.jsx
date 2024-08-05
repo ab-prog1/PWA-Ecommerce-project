@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , useContext} from 'react';
 import AppURL from '../api/AppURL';
 import FooterDesktop from '../components/common/FooterDesktop';
 import FooterMobile from '../components/common/FooterMobile';
@@ -7,12 +7,17 @@ import NavMenuMobile from '../components/common/NavMenuMobile';
 import ProductDetails from '../components/ProductDetails/ProductDetails';
 import SliderLoading from '../components/PlaceHolder/SliderLoading';
 import axios from 'axios';
+import {UserContext} from '../route/AppRoute';
 
-const ProductDetailsPage = ({ match, user }) => {
+
+const ProductDetailsPage = ({ match, props }) => {
   const [code, setCode] = useState(match?.params?.code || '');
   const [productData, setProductData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [mainDiv, setMainDiv] = useState('d-none');
+  const { user, setUser } = useContext(UserContext);
+
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -26,7 +31,7 @@ const ProductDetailsPage = ({ match, user }) => {
         console.error(error);
         setIsLoading(false);
       });
-  }, [code]);
+  }, [code, user]);
 
   return (
     <>

@@ -8,6 +8,8 @@ import {UserContext} from '../route/AppRoute';
 
 const CartPage = (props) => {
   const { user, setUser } = useContext(UserContext);
+
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [user]);

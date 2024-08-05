@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap';
 
 const CategoryLoading = ({ isLoading }) => {
   return (
-    <div className={isLoading}>
+    <div className={isLoading ? "loading" : ""}>
       <Container className="text-center" fluid>
         <div className="section-title text-center mb-55">
           <h2>CATEGORIES</h2>

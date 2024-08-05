@@ -27,6 +27,7 @@ const NewArrival = () => {
       .get(AppURL.ProductListByRemark("NEW"))
       .then((response) => {
         setProductData(response.data);
+        console.log(response)
         setIsLoading("d-none");
         setMainDiv("");
       })

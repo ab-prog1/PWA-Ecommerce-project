@@ -24,23 +24,25 @@ const FooterDesktop = () => {
     const fetchSiteInfo = async () => {
       try {
         const response = await axios.get(AppURL.AllSiteInfo);
-        if (response.status === 200) {
+        if (response.status === 200 && response.data.length > 0) {
           const JsonData = response.data[0];
           setState({
-            address: JsonData['address'],
-            android_app_link: JsonData['android_app_link'],
-            ios_app_link: JsonData['ios_app_link'],
-            facbook_link: JsonData['facbook_link'],
-            twitter_link: JsonData['twitter_link'],
-            instagram_link: JsonData['instagram_link'],
-            copyright_text: JsonData['copyright_text'],
+            address: JsonData['address'] || '',
+            android_app_link: JsonData['android_app_link'] || '',
+            ios_app_link: JsonData['ios_app_link'] || '',
+            facbook_link: JsonData['facbook_link'] || '',
+            twitter_link: JsonData['twitter_link'] || '',
+            instagram_link: JsonData['instagram_link'] || '',
+            copyright_text: JsonData['copyright_text'] || '',
             loaderDiv: 'd-none',
             mainDiv: '',
           });
+        } else {
+          console.error('API response is missing expected data.');
         }
       } catch (error) {
-        console.error(error);
-             }
+        console.error('Error fetching site info:', error);
+      }
     };
     fetchSiteInfo();
   }, []);
@@ -145,33 +147,3 @@ const FooterDesktop = () => {
 };
 
 export default FooterDesktop;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

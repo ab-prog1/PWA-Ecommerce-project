@@ -84,7 +84,6 @@ const FooterDesktop = () => {
                 <i className="fab m-1 h4 fa-twitter"></i>
               </a>
             </Col>
-
             <Col className="p-2" lg={3} md={3} sm={6} xs={12}>
               <h5 className="footer-menu-title">THE COMPANY</h5>
               <Link to="/about" className="footer-link">

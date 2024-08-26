@@ -10,23 +10,34 @@ use App\Models\Subcategory;
 class CategoryController extends Controller
 {
     public function AllCategory(){
+
         $categories = Category::all();
         $categoryDetailsArray = [];
 
         foreach ($categories as $value) {
-            $subcategory = subcategory::where('category_name', $value['category_name'])->get();
+            $subcategory = Subcategory::where('category_name',$value['category_name'])->get();
 
-      $item = [
-        'category_name' => $value['category_name'],
-        'category_image' => $value['category_image'],
-        'subcategory_name' => $subcategory
-      ];
-array_push(  $categoryDetailsArray, $item);
+            $item = [
+                'category_name' => $value['category_name'],
+                'category_image' => $value['category_image'],
+                'subcategory_name' => $subcategory
+            ];
+
+            array_push($categoryDetailsArray, $item);
 
         }
+        return $categoryDetailsArray;
 
-        return    $categoryDetailsArray;
+    } // End Mehtod
 
-    }
+
+
+    public function GetAllCategory(){
+
+        $category = Category::latest()->get();
+        return view('backend.category.category_view',compact('category'));
+
+    } // End Mehtod
+
 
 }

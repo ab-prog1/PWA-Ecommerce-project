@@ -43,4 +43,8 @@ Route::prefix('category')->group(function(){
 
 Route::get('/all',[CategoryController::class, 'GetAllCategory'])->name('all.category');
 
+Route::get('/add',[CategoryController::class, 'AddCategory'])->name('add.category');
+
+Route::post('/store',[CategoryController::class, 'StoreCategory'])->name('category.store');
+
 });
